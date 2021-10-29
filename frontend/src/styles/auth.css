@@ -1,0 +1,23 @@
+div.auth-form {
+    margin: 25px auto;
+    width: 30%;
+    padding:10px;
+    background-color: #fff;
+    border-radius:3px;
+    text-align:center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border-bottom:5px solid #22537e;
+    font-weight:100;
+}
+
+div.auth-form a {
+    text-decoration: none;
+    color:#22537e;
+}
+
+div.auth-form h1 {
+    background: -webkit-linear-gradient(0.15turn, #286091, #42a2f7);
+    -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+}
+

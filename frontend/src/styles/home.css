@@ -1,0 +1,49 @@
+div.message {
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    top:50vh;
+    font-size:30px;
+}
+
+div.message-description {
+    font-size:15px;
+}
+
+div.home-page {
+    background-image: url("https://wallpaperaccess.com/full/677511.jpg");
+    min-height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+div.home-page-inner {
+    background-color: rgba(0, 0, 0, 0.82);
+    color: #fff;
+    font-size:50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-shadow: 1px 1px 10px #000;
+    text-align:center;
+}
+
+div#home-header {
+    text-shadow: 1px 1px 2px #000;
+    position:absolute;
+    top:0;
+    z-index:999999;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    color: rgb(255, 255, 255);
+    font-weight:200;
+    top: 0;
+    width: 100%;
+}
