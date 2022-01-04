@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Link, useRouteMatch } from 'react-router-dom'
 
-export default function Panel({ delayTime, img, description, author, title }) {
+export default function Panel({ delayTime, img, description, date, title }) {
 
     const { url } = useRouteMatch()
 
@@ -20,9 +20,8 @@ export default function Panel({ delayTime, img, description, author, title }) {
                     <Link to={`${url}/${title}`}>{title}</Link>
                 </h3>
                 <div className="description">
-                    {description}
+                    <italic>{new Date(date).toLocaleDateString()}</italic> - {description}
                 </div>
-                <strong><Link to={`members/${author}`}>{author}</Link></strong>
             </div>
         </motion.div>
     )

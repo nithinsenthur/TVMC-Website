@@ -26,7 +26,6 @@ export default function Register() {
     const specialty = useRef()
     const [interests, setInterests] = useState([])
 
-    const [responseKey, setResponseKey] = useState()
     const [error, setError] = useState()
     const [response, setResponse] = useState()
 
@@ -52,7 +51,7 @@ export default function Register() {
             setResponse)
         if (response) history.push('/login')
     }
-
+    
     const handleCheckboxOnChange = ({ target }) => {
         if (interests.includes(target.value)) {
             setInterests(interests.filter(interest => interest !== target.value))
@@ -241,9 +240,6 @@ export default function Register() {
                                     <label for="Organizing Events"> Organizing Events</label>
                                 </div>
                             </div>
-                            <ReCAPTCHA
-                                onChange={e => setResponseKey(e) /* Send this to backend */}
-                            />
                             <div>
                                 <motion.button
                                     className="form-button"

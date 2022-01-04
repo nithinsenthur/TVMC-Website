@@ -8,7 +8,25 @@ export default function About() {
             animate={{ scale: 1 }}
             className="main">
             <h1>About Us</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non volutpat tellus, eget laoreet diam. Morbi eget libero rhoncus, eleifend augue quis, consectetur nibh. Nullam porttitor vel nibh eu convallis. Curabitur eget dui blandit, facilisis massa sit amet, laoreet velit. Curabitur non dignissim nisi. Maecenas gravida pharetra lectus eget maximus. Proin lectus enim, malesuada id tincidunt eu, placerat eu massa. Aenean a viverra augue, quis aliquam tellus. Nam vel ipsum ac enim laoreet congue id sed nisl. Suspendisse nibh mauris, pretium vel dictum euismod, malesuada vel nulla. Nullam sodales laoreet quam, quis lacinia lorem placerat a.</p>
+            <p>
+                Annual Alumni/Social meeting; Will be conducted across various cities of
+                North America every year and co-ordinated services and education year long.
+                The participants are all members from the TVMC Alumni Association of North
+                America and visiting emeritus from parent organisation.
+            </p>
+            <p>
+                Educational Program: Interactive seminar through online and in-person targeting the TVMC
+                medical students and Alumni physicians across the world  periodically, mainly at cities of
+                USA and cities of Tamil Nadu, India.
+            </p>
+            <p>
+                Services: includes providing education and financial support for students in need on annual
+                basis. Providing basic medical services and expertise to the people in need at USA and India
+                annually. A non-profit organisation to bring all alumni of TVMC living in North America for
+                philanthropic, educational and services with parent organisation.</p>
+            <p>
+                Charitable, Educational, Scientific 501(c)(3)
+            </p>
         </motion.div>
     )
 }

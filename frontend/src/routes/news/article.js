@@ -6,7 +6,8 @@ import { Alert, Loading } from '../../components/global'
 import { useArticles } from '../../services/articles.service'
 import { useAuth } from '../../services/users.service'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusSquare, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlusSquare, faTimesCircle, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faFacebookF, faLinkedinIn, faTwitter } from "@fortawesome/free-brands-svg-icons"
 
 export default function Article() {
 
@@ -18,7 +19,7 @@ export default function Article() {
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        retrieve(title)
+        retrieve({ title })
             .then(res => {
                 if (res.articles[0]) {
                     setArticle(res.articles[0])
@@ -31,7 +32,7 @@ export default function Article() {
     }, [])
 
     return (
-        <div className="main">
+        <div>
             {isLoading
                 ?
                 <Loading />
@@ -39,28 +40,50 @@ export default function Article() {
                     ?
                     <Alert message={error} />
                     :
-                    <div>
-                        {isAdmin() && <Link className="button" to={`/news/edit/${title}`}><FontAwesomeIcon icon={faPlusSquare} /> Edit Article</Link>}
-                        {isAdmin() && <Link className="button-red" to={`/news/delete/${title}`}><FontAwesomeIcon icon={faTimesCircle} /> Delete Article</Link>}
-                        <div className="article-wrapper">
-                            <motion.div
-                                initial={{ scale: 0.5 }}
-                                animate={{ scale: 1 }}
-                            >
-                                <Link to="/news">News</Link>
-                                <h1 className="article-title">{article.title}</h1>
-                                <p className="article-description">{article.description}</p>
-                                {article.img && <img className="article-photo" alt="" src={`http://localhost:5000/${article.img}`}></img>}
+                    <div className="article-wrapper">
+                        <motion.div
+                            initial={{ y: -100 }}
+                            animate={{ y: 0 }}
+                            transition={{ type: "spring", stiffness: 50 }}
+                        >
+                            <div className="banner">
+                                {article.img
+                                    &&
+                                    <div className="article-photo"
+                                        style={{
+                                            backgroundImage:
+                                                `linear-gradient(to bottom, 
+                                                                rgba(255,255,255,0) 0%, 
+                                                                rgba(0,0,0,0.5) 40%, 
+                                                                rgba(0,0,0,0.6) 100%),
+                                            url(http://localhost:5000/${article.img})`
+                                        }}
+                                    />
+                                }
                                 <div className="article-header">
-                                    <div>By <strong><Link to={`members/${article.name}`}>{article.name}</Link></strong></div>
-                                    <div>{new Date(article.date).toUTCString()}</div>
+                                    <h1 className="article-title">{article.title}</h1>
+                                    <p className="article-info">
+                                        {new Date(article.date).toDateString()} | By <strong><Link to={`members/${article.name}`}>{article.name}</Link></strong>
+                                    </p>
+                                    <div className="article-social-media-buttons">
+                                        <ul>
+                                            <li><FontAwesomeIcon icon={faFacebookF} /></li>
+                                            <li><FontAwesomeIcon icon={faLinkedinIn} /></li>
+                                            <li><FontAwesomeIcon icon={faTwitter} /></li>
+                                            <li><FontAwesomeIcon icon={faEnvelope} /></li>
+                                        </ul>
+                                    </div>
+                                    <p className="article-description">{article.description}</p>
                                 </div>
-                                <hr />
-                                <div className="article-content">
-                                    <Markup content={article.content} />
+                            </div>
+                            <div className="main">
+                                {isAdmin() && <Link className="button" to={`/news/edit/${title}`}><FontAwesomeIcon icon={faPlusSquare} /> Edit Article</Link>}
+                                {isAdmin() && <Link className="button-red" to={`/news/delete/${title}`}><FontAwesomeIcon icon={faTimesCircle} /> Delete Article</Link>}
+                                <div className="article-body">
+                                        <Markup content={article.content} />
                                 </div>
-                            </motion.div>
-                        </div>
+                            </div>
+                        </motion.div>
                     </div>
             }
         </div>

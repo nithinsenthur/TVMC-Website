@@ -18,7 +18,10 @@ export default function News() {
         <div>
             <Switch>
                 <Route exact path={url}>
-                    <NewsIndex query={query.get("search")} />
+                    <NewsIndex 
+                        title={query.get("title")} 
+                        page={parseInt(query.get('page') || '1', 10)} 
+                    />
                 </Route>
                 <Route path={`${url}/create`}>
                     {isAdmin() ? <CreateArticle /> : <Redirect to="/news" /> }

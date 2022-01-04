@@ -7,11 +7,16 @@ const ObjectId = mongodb.ObjectID
 export default class ArticlesController {
     
     static async apiGetArticles(req, res, next) {
+        const page = parseInt(req.query.page, 10)-1
+        
         let filters = {}
         if (req.query.title) {
             filters.title = req.query.title
         }
-        const { articlesList, totalNumArticles } = await articlesDAO.getArticles({ filters })
+        const { articlesList, totalNumArticles } = await articlesDAO.getArticles({ 
+            filters,
+            page
+            })
         let response = {
             articles: articlesList,
             filters: filters,

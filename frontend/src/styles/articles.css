@@ -15,7 +15,6 @@ div.articles-container div.card {
     margin:5px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
     transition:0.3s;
-    border-bottom:5px solid #22537e;
 }
 
 div.articles-container div.card a {
@@ -41,46 +40,76 @@ div.articles-container div.card h3 {
     margin-top:0;
 }
 
-div.article-wrapper {
-    font-family: 'STIX Two Text', serif;
-    margin:0 75px 0;
-    padding:10px;
-    letter-spacing: -0.5px;
+div.article-info a {
+    text-decoration: none;
+    color:inherit;
 }
 
-div.article-wrapper a {
-    text-decoration: none;
-    color:#22537e;
-    font-weight:700;
+div.article-wrapper div.banner {
+    position:relative;
+}
+
+div.article-wrapper div.article-header {
+    letter-spacing: -0.5px;
+    position:absolute;
+    bottom:10%;
+    width:75%;
+    text-shadow:1px 1px 5px #000;
+    color:#fff;
+    padding:25px;
+    margin-bottom:-10px;
 }
 
 h1.article-title {
+    font-family: 'STIX Two Text', serif;
     margin-bottom:0;
-    margin-top:0;
     font-weight:700;
-    font-size:2.5rem;
-    line-height:1;
+    font-size:3rem;
+}
+
+p.article-info {
+    font-weight:200;
+}
+
+p.article-info a {
+    color:inherit;
+    text-decoration: none;
 }
 
 p.article-description {
     margin-top:0;
+}
+
+div.article-social-media-buttons ul {
+    list-style-type: none;
+    padding:0;
+    overflow:hidden;
+}
+
+div.article-social-media-buttons li {
+    border: 1px solid #fff;
+    line-height:20px;
+    height:20px;
+    width:20px;
+    text-align: center;
+    padding:5px;
+    margin-right:10px;
+    border-radius:50%;
+    display:block;
+    float:left;
+}
+
+div.article-photo {
+    width:100%;
+    height:90vh;
+    background-size: cover;
+}
+
+div.article-body {
+    margin:0 auto;
+    font-family:'STIX Two Text', serif;
     font-size:1.25rem;
-    font-style: italic;
-}
-
-div.article-header {
-    display:flex;
-    justify-content:space-between;
-}
-
-img.article-photo {
-    max-width:50%;
-    max-height:50%;
-}
-
-div.article-content {
-    font-size:1.25rem;
-    font-weight:100;
+    width:75%;
 }
 
 div.news-banner {
@@ -112,7 +141,7 @@ div.news-banner form.search-bar button[type="submit"] {
 }
 
 div.article-form {
-    margin: 25px auto;
+    margin: 0 auto;
     padding:10px;
     background-color: #fff;
     border-radius:3px;

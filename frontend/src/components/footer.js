@@ -45,7 +45,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="footer-padding">
-            © 2021 Tirnulveli Medical College Alumni
+            © 2022 TVMC Alumni Association of North America
             </div>
         </footer>
     )

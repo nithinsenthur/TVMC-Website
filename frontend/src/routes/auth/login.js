@@ -18,12 +18,12 @@ export default function LogIn() {
 
     const handleSubmit = async e => {
         e.preventDefault()
-        await login({ 
-            email: email.current.value, 
+        await login({
+            email: email.current.value,
             password: password.current.value,
             responseKey: responseKey
         },
-         setError)
+            setError)
     }
 
     return (
@@ -55,7 +55,7 @@ export default function LogIn() {
                             />
                         </div>
                         <div>
-                            <motion.button 
+                            <motion.button
                                 className="form-button"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}

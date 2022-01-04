@@ -2,10 +2,15 @@ import jwt_decode from 'jwt-decode'
 
 export const useArticles = () => {
     return {
-        retrieve: async (title = null) => {
+        retrieve: async ({
+            title = null,
+            page = null
+        } = {}) => {
             let query = 'http://localhost:5000/api/articles/'
             if (title) {
                 query += `?title=${title}`
+            } else if (page) {
+                query += `?page=${page}`
             }
             return await fetch(query)
                 .then(response => response.json())

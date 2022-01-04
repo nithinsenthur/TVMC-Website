@@ -16,6 +16,7 @@ export default class articlesDAO {
 
     static async getArticles({
         filters = null,
+        page = 0,
         articlesPerPage = 20,
     } = {}) {
         let query
@@ -31,7 +32,7 @@ export default class articlesDAO {
             console.error(`Unable to issue find command, ${e}`)
             return { articlesList: [], totalNumArticles: 0 }
         }
-        const displayCursor = cursor.limit(articlesPerPage)
+        const displayCursor = cursor.limit(articlesPerPage).skip(articlesPerPage*page)
         try {
             const articlesList = await displayCursor.toArray()
             const totalNumArticles = await articles.countDocuments(query)

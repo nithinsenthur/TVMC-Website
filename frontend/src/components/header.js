@@ -1,46 +1,78 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { useHistory } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faNewspaper, faUsers, faIdCard, faHeartbeat, faMicrophoneAlt, faPhotoVideo, 
-    faComments, faBars, faCogs, faChartLine, faDoorClosed, faStethoscope } from '@fortawesome/free-solid-svg-icons'
+import {
+    faNewspaper, faUsers, faIdCard, faKey, faPhotoVideo,
+    faComments, faUserCircle, faCogs, faChartLine, faDoorClosed, faStethoscope,
+    faChevronDown
+} from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../services/users.service'
 
 export default function Header() {
 
     const { isLoggedIn, isVerified, isAdmin, getUsername } = useAuth()
+    let history = useHistory()
 
     return (
-        <div id="header">
-            <div id="logo">
-                <Link to="/">
-                    <FontAwesomeIcon icon={faHeartbeat} /> Tirunelveli Medical College Alumni
-                </Link>
-            </div>
-            <div id="navbar">
-                <ul>
-                    {isVerified() && <li><Link to="/members"><FontAwesomeIcon icon={faUsers} /> Members</Link></li>}
-                    <li><Link to="/about"><FontAwesomeIcon icon={faStethoscope} /> About</Link></li>
-                    <li><Link to="/news"><FontAwesomeIcon icon={faNewspaper} /> News</Link></li>
-                    <li><Link to="/gallery"><FontAwesomeIcon icon={faPhotoVideo} /> Gallery</Link></li>
-                    <li><Link to="/forums"><FontAwesomeIcon icon={faComments} /> Forums</Link></li>
-                    {isLoggedIn()
-                        ? <div className="dropdown">
-                            <div id="icon">
-                                <FontAwesomeIcon icon={faBars} />
-                            </div>
-                            <div className="dropdown-content">
-                                <Link to="/logout"><FontAwesomeIcon icon={faDoorClosed} /> Log Off</Link>
-                                <Link to="/settings"><FontAwesomeIcon icon={faCogs} /> Settings</Link>
-                                {isVerified() && <Link to={`/members/${getUsername()}`}><FontAwesomeIcon icon={faIdCard} /> My Profile</Link>}
-                                {isAdmin() && <Link to="/admin/dashboard"><FontAwesomeIcon icon={faChartLine} /> Admin Dashboard</Link>}
-                            </div>
+        <div className="header">
+            
+            <div className="left">
+                <div className="logo-emblem">
+                    <Link to="/">
+                        <div className="emblem">
+                            <img src="http://localhost:5000/public/images/image0.jpeg"></img>
                         </div>
-                        : <li id="login"><Link to="/login"><FontAwesomeIcon icon={faIdCard} /> Log In</Link></li>
-                    }
-                </ul>
+                    </Link>
+                </div>
+                <div className="logo-text">
+                        <Link to="/">TVMC Alumni Association of North America</Link>
+                </div>
+                <div className="nav">
+                    <ul>
+                        {isVerified() && <li><Link to="/members"><FontAwesomeIcon icon={faUsers} /> Members</Link></li>}
+                        <li><Link to="/about"><FontAwesomeIcon icon={faStethoscope} /> About</Link></li>
+                        <li><Link to="/news"><FontAwesomeIcon icon={faNewspaper} /> News</Link></li>
+                        <li><Link to="/gallery"><FontAwesomeIcon icon={faPhotoVideo} /> Gallery</Link></li>
+                        <li><Link to="/forums"><FontAwesomeIcon icon={faComments} /> Forums</Link></li>
+                    </ul>
+                </div>
             </div>
-            <div id="infobar">
-                <FontAwesomeIcon icon={faMicrophoneAlt} /> Announcements: We Are Open!
+            <div className="right">
+                {isLoggedIn()
+                    ?
+                    <div className="dropdown">
+                        <div id="icon">
+                            <FontAwesomeIcon icon={faUserCircle} /> {getUsername()} <FontAwesomeIcon icon={faChevronDown} />
+                         </div>
+                        <div className="dropdown-content">
+                            <Link to="/logout"><FontAwesomeIcon icon={faDoorClosed} /> Log Off</Link>
+                            <Link to="/settings"><FontAwesomeIcon icon={faCogs} /> Settings</Link>
+                            {isVerified() && <Link to={`/members/${getUsername()}`}><FontAwesomeIcon icon={faIdCard} /> My Profile</Link>}
+                            {isAdmin() && <Link to="/admin/dashboard"><FontAwesomeIcon icon={faChartLine} /> Admin Dashboard</Link>}
+                        </div>
+                    </div>
+                    :
+                    <div>
+                        <motion.button
+                            id="login"
+                            onClick={e => history.push('/login')}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                        >
+                            <FontAwesomeIcon icon={faKey} /> Log In
+                        </motion.button>
+                        <motion.button
+                            id="sign-up"
+                            onClick={e => history.push('/register')}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                        >
+                            <FontAwesomeIcon icon={faIdCard} /> Sign Up
+                        </motion.button>
+                    </div>
+                }
             </div>
         </div>
     )

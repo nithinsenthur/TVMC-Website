@@ -19,6 +19,8 @@ MongoClient.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopol
     .then(async client => {
         await membersDAO.injectDB(client)
         await articlesDAO.injectDB(client)
+        //await galleryDAO.injectDB(client)
+        //await forumsDAO.injectDB(client)
         app.listen(port)
     })
 
