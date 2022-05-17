@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Link, useRouteMatch } from 'react-router-dom'
+import config from '../../config.json'
 
 export default function Panel({ delayTime, img, description, date, title }) {
 
@@ -14,7 +15,7 @@ export default function Panel({ delayTime, img, description, date, title }) {
             whileHover={{ y: -5 }}
             transition={{ delay: 0.1 * delayTime }}
         >
-            {img && <img src={`http://localhost:5000/${img}`} />}
+            {img && <img src={`${config.siteURL}/${img}`} />}
             <div className="card-info">
                 <h3>
                     <Link to={`${url}/${title}`}>{title}</Link>

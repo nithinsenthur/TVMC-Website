@@ -1,5 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 export default function About() {
     return (
@@ -7,7 +9,11 @@ export default function About() {
             initial={{ scale: 0.5 }}
             animate={{ scale: 1 }}
             className="main">
-            <h1>About Us</h1>
+            <div
+                className="primary"
+            >
+                <h1><FontAwesomeIcon icon={faQuestionCircle} /> About Us</h1>
+            </div>
             <p>
                 Annual Alumni/Social meeting; Will be conducted across various cities of
                 North America every year and co-ordinated services and education year long.

@@ -47,3 +47,12 @@ div#home-header {
     top: 0;
     width: 100%;
 }
+
+div.latest-news-container {
+    display: flex;
+}
+
+div.latest-news-container div.panel img {
+    width:100%;
+}
+

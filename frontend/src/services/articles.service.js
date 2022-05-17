@@ -1,16 +1,20 @@
 import jwt_decode from 'jwt-decode'
+import config from "../config.json"
 
 export const useArticles = () => {
     return {
         retrieve: async ({
             title = null,
-            page = null
+            page = null,
+            articlesPerPage = null
         } = {}) => {
-            let query = 'http://localhost:5000/api/articles/'
+            let query = `${config.siteURL}/api/articles/`
             if (title) {
                 query += `?title=${title}`
             } else if (page) {
                 query += `?page=${page}`
+            } else if (articlesPerPage) {
+                query += `?articlesPerPage=${articlesPerPage}`
             }
             return await fetch(query)
                 .then(response => response.json())
@@ -27,7 +31,7 @@ export const useArticles = () => {
             articleData.append('content', content)
             articleData.append('img', img)
 
-            return await fetch('http://localhost:5000/api/articles/create', {
+            return await fetch(`${config.siteURL}/api/articles/create`, {
                 method: 'POST',
                 body: articleData,
                 headers: {
@@ -37,7 +41,7 @@ export const useArticles = () => {
         },
         remove: async (title) => {
             const token = localStorage.getItem('token')
-            return await fetch('http://localhost:5000/api/articles/delete', {
+            return await fetch(`${config.siteURL}/api/articles/delete`, {
                 method: 'DELETE',
                 headers: {
                     'auth-token': token,
@@ -50,7 +54,7 @@ export const useArticles = () => {
         },
         edit: async (article_title, content = null, title = null, description = null) => {
             const token = localStorage.getItem('token')
-            return await fetch('http://localhost:5000/api/articles/edit', {
+            return await fetch(`${config.siteURL}/api/articles/edit`, {
                 method: 'PUT',
                 headers: {
                     'auth-token': token,

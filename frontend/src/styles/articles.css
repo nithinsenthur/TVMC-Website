@@ -1,3 +1,5 @@
+/* Articles Cards */
+
 div.articles-container {
     display:flex;
     flex-wrap: wrap;
@@ -6,25 +8,25 @@ div.articles-container {
 
 div.articles-container div.card {
     display:flex;
-    font-family:'STIX Two Text', serif;
+    font-family: var(--serif-font);
     line-height:1.25;
     flex-direction: column;
     flex-basis:100%;
     background-color: #fff;
     max-width:20%;
     margin:5px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--box-shadow-thin);
     transition:0.3s;
 }
 
 div.articles-container div.card a {
     text-decoration: none;
-    color:#2e6da4;
+    color: var(--primary-color);
     transition:0.3s;
 }
 
 div.articles-container div.card a:hover {
-    color:#22537e;
+    color: var(--primary-color-darkened);
 }
 
 div.articles-container div.card div.card-info {
@@ -45,12 +47,18 @@ div.article-info a {
     color:inherit;
 }
 
+
+div.pagination {
+    margin:10px;
+}
+
+/* Article Page */
+
 div.article-wrapper div.banner {
     position:relative;
 }
 
 div.article-wrapper div.article-header {
-    letter-spacing: -0.5px;
     position:absolute;
     bottom:10%;
     width:75%;
@@ -61,7 +69,7 @@ div.article-wrapper div.article-header {
 }
 
 h1.article-title {
-    font-family: 'STIX Two Text', serif;
+    font-family: var(--serif-font);
     margin-bottom:0;
     font-weight:700;
     font-size:3rem;
@@ -78,6 +86,7 @@ p.article-info a {
 
 p.article-description {
     margin-top:0;
+    font-weight:200;
 }
 
 div.article-social-media-buttons ul {
@@ -107,7 +116,7 @@ div.article-photo {
 
 div.article-body {
     margin:0 auto;
-    font-family:'STIX Two Text', serif;
+    font-family:var(--serif-font);
     font-size:1.25rem;
     width:75%;
 }
@@ -154,10 +163,3 @@ div.article-form a {
     text-decoration: none;
     color:#22537e;
 }
-
-div.article-form h1 {
-    background: -webkit-linear-gradient(0.15turn, #337ab7, #22537e);
-    -webkit-background-clip: text;
-     -webkit-text-fill-color: transparent;
-}
-

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react"
 import jwt_decode from 'jwt-decode'
+import config from "../config.json"
 
 const AuthContext = React.createContext()
 
@@ -16,7 +17,7 @@ export const AuthProvider = ({ children }) => {
 
     const getUsers = async (username = null) => {
         const token = localStorage.getItem('token')
-        let query = 'http://localhost:5000/api/members/'
+        let query = `${config.siteURL}/api/members/`
         if(username)
         {
             query += `?name=${username}`
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
     const getUnverifiedUsers = async () => {
         const token = localStorage.getItem('token')
-        let query = 'http://localhost:5000/api/members/unverified'
+        let query = `${config.siteURL}/api/members/unverified`
         return await fetch(query, {
             method: 'GET',
             headers: {
@@ -42,8 +43,8 @@ export const AuthProvider = ({ children }) => {
         .then(response => response.json())
     }
 
-    const login = async (user, errorCallback) => {
-        let response = await fetch('http://localhost:5000/api/members/login', {
+    const login = async (user, cb) => {
+        let response = await fetch(`${config.siteURL}/api/members/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -57,7 +58,7 @@ export const AuthProvider = ({ children }) => {
         .then(data => data.json())
 
         if(response.error) {
-            return errorCallback(response.error)
+            return cb(response.error)
         } else {
             setToken(response.token)
             localStorage.setItem('token', response.token)
@@ -65,7 +66,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const verify = async (id) => {
-        await fetch('http://localhost:5000/api/members/verify', {
+        await fetch(`${config.siteURL}/api/members/verify`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const deleteMember = async (id) => {
-        await fetch('http://localhost:5000/api/members/delete', {
+        await fetch(`${config.siteURL}/api/members/delete`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,8 +96,8 @@ export const AuthProvider = ({ children }) => {
         setToken(null)
     }
 
-    const register = async (user, errorCallback, responseCallback) => {
-        let response = await fetch('http://localhost:5000/api/members/register', {
+    const register = async (user, cb, respond) => {
+        let response = await fetch(`${config.siteURL}/api/members/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -105,15 +106,15 @@ export const AuthProvider = ({ children }) => {
         }).then(response => response.json())
 
         if (response.error) {
-            errorCallback(response.error)
+            cb(response.error)
         } else {
-            errorCallback()
-            responseCallback(response.status)
+            cb()
+            respond(response.status)
         }
     }
 
     const edit = async (id, update) => {
-        return await fetch('http://localhost:5000/api/members/edit', {
+        return await fetch(`${config.siteURL}/api/members/edit`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

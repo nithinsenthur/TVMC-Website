@@ -31,11 +31,11 @@ export default function Header() {
                 </div>
                 <div className="nav">
                     <ul>
-                        {isVerified() && <li><Link to="/members"><FontAwesomeIcon icon={faUsers} /> Members</Link></li>}
-                        <li><Link to="/about"><FontAwesomeIcon icon={faStethoscope} /> About</Link></li>
-                        <li><Link to="/news"><FontAwesomeIcon icon={faNewspaper} /> News</Link></li>
-                        <li><Link to="/gallery"><FontAwesomeIcon icon={faPhotoVideo} /> Gallery</Link></li>
-                        <li><Link to="/forums"><FontAwesomeIcon icon={faComments} /> Forums</Link></li>
+                        {isVerified() && <li><Link to="/members">Members</Link></li>}
+                        <li><Link to="/about"> About</Link></li>
+                        <li><Link to="/news">News</Link></li>
+                        <li><Link to="/gallery">Gallery</Link></li>
+                        <li><Link to="/forums">Forums</Link></li>
                     </ul>
                 </div>
             </div>
@@ -47,7 +47,7 @@ export default function Header() {
                             <FontAwesomeIcon icon={faUserCircle} /> {getUsername()} <FontAwesomeIcon icon={faChevronDown} />
                          </div>
                         <div className="dropdown-content">
-                            <Link to="/logout"><FontAwesomeIcon icon={faDoorClosed} /> Log Off</Link>
+                            <Link to="/logout"><FontAwesomeIcon icon={faDoorClosed} /> Log Out</Link>
                             <Link to="/settings"><FontAwesomeIcon icon={faCogs} /> Settings</Link>
                             {isVerified() && <Link to={`/members/${getUsername()}`}><FontAwesomeIcon icon={faIdCard} /> My Profile</Link>}
                             {isAdmin() && <Link to="/admin/dashboard"><FontAwesomeIcon icon={faChartLine} /> Admin Dashboard</Link>}

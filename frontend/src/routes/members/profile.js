@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useParams } from 'react-router'
 import { useAuth } from '../../services/users.service'
 import { Alert, Loading, Avatar } from '../../components/global'
+import config from "../../config.json"
 
 export default function Profile() {
 
@@ -42,7 +43,7 @@ export default function Profile() {
                         <div className="profile">
                             <div className="card">
                                 <h1>{member.name}</h1>
-                                {member.avatar && <Avatar url={`http://localhost:5000/${member.avatar}`} />}
+                                {member.avatar && <Avatar url={`${config.siteURL}/${member.avatar}`} />}
                                 <h2>{member.role} {member.specialty && <span>| {member.specialty}</span>}</h2>
                                 <strong>Joined:</strong> {new Date(member.date).toDateString()}
                                 <div>

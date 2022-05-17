@@ -13,6 +13,9 @@ export default function Register() {
     const { register } = useAuth()
     const history = useHistory()
 
+    const [error, setError] = useState()
+    const [response, setResponse] = useState()
+
     const username = useRef()
     const password = useRef()
     const email = useRef()
@@ -26,9 +29,15 @@ export default function Register() {
     const specialty = useRef()
     const [interests, setInterests] = useState([])
 
-    const [error, setError] = useState()
-    const [response, setResponse] = useState()
+    const handleCheckboxOnChange = ({ target }) => {
+        if (interests.includes(target.value)) {
+            setInterests(interests.filter(interest => interest !== target.value))
+        } else {
+            interests.push(target.value)
+        }
+    }
 
+    // API call to register user
     const handleSubmit = async e => {
         e.preventDefault()
         await register({
@@ -51,14 +60,7 @@ export default function Register() {
             setResponse)
         if (response) history.push('/login')
     }
-    
-    const handleCheckboxOnChange = ({ target }) => {
-        if (interests.includes(target.value)) {
-            setInterests(interests.filter(interest => interest !== target.value))
-        } else {
-            interests.push(target.value)
-        }
-    }
+
     return (
         <motion.div
             initial={{ scale: 0 }}
@@ -100,7 +102,7 @@ export default function Register() {
                                 />
                             </div>
                             <div>
-                                <label for="class">Class </label>
+                                <label for="class">Batch / Starting Year </label>
                                 <input
                                     type="number"
                                     id="class"
@@ -119,11 +121,34 @@ export default function Register() {
                             <div>
                                 <label for="specialty">Specialty </label>
                                 <select id="specialty" ref={specialty}>
-                                    <option value="Placeholder1">Placeholder1</option>
-                                    <option value="Placeholder2">Placeholder2</option>
-                                    <option value="Placeholder3">Placeholder3</option>
-                                    <option value="Placeholder4">Placeholder4</option>
-                                    <option value="Placeholder5">Placeholder5</option>
+                                    <option value="Anesthesiology">Anesthesiology</option>
+                                    <option value="Dermatology">Dermatology</option>
+                                    <option value="Radiology">Radiology</option>
+                                    <option value="Emergency medicine">Emergency medicine</option>
+                                    <option value="Family medicine">Family medicine</option>
+                                    <option value="Internal medicine">Internal medicine</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Nuclear medicine">Nuclear medicine</option>
+                                    <option value="Obstetrics and gynecology">Obstetrics and gynecology</option>
+                                    <option value="Sports Medicine">Sports Medicine</option>
+                                    <option value="Ophthalmology">Ophthalmology</option>
+                                    <option value="Pathology">Pathology</option>
+                                    <option value="Pediatrics">Pediatrics</option>
+                                    <option value="Physical medicine and rehabilitation">Physical medicine and rehabilitation</option>
+                                    <option value="Preventive medicine">Preventive medicine</option>
+                                    <option value="Psychiatry">Psychiatry</option>
+                                    <option value="Radiation oncology">Radiation oncology</option>
+                                    <option value="Medical oncology">Medical oncology</option>
+                                    <option value="Surgery">Surgery</option>
+                                    <option value="Nephrology">Nephrology</option>
+                                    <option value="Endocrinology">Endocrinology</option>
+                                    <option value="Pulmonology">Pulmonology</option>
+                                    <option value="Rheumatology">Rheumatology</option>
+                                    <option value="Gastroenterology">Gastroenterology</option>
+                                    <option value="Hematology">Hematology</option>
+                                    <option value="Infectious disease">Infectious disease</option>
+                                    <option value="Intensive Care Medicine">Intensive Care Medicine</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                             <div>
@@ -136,7 +161,7 @@ export default function Register() {
                                 />
                             </div>
                             <div>
-                                <label for="street">Street </label>
+                                <label for="street">Work Address </label>
                                 <input
                                     type="text"
                                     id="street"

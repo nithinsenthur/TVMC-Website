@@ -14,8 +14,10 @@ export default function Members() {
         <div>
             <Switch>
                 <Route exact path={url}>
-                    <div className="members-banner">
-                        <FontAwesomeIcon icon={faAmbulance} /> Members
+                    <div
+                        className="primary"
+                    >
+                        <h1><FontAwesomeIcon icon={faAmbulance} /> Members</h1>
                     </div>
                     <MembersIndex query={query.get("search")} />
                 </Route>

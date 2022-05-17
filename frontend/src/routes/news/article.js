@@ -8,6 +8,7 @@ import { useAuth } from '../../services/users.service'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare, faTimesCircle, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faLinkedinIn, faTwitter } from "@fortawesome/free-brands-svg-icons"
+import config from "../../config.json"
 
 export default function Article() {
 
@@ -56,7 +57,7 @@ export default function Article() {
                                                                 rgba(255,255,255,0) 0%, 
                                                                 rgba(0,0,0,0.5) 40%, 
                                                                 rgba(0,0,0,0.6) 100%),
-                                            url(http://localhost:5000/${article.img})`
+                                            url(${config.siteURL}/${article.img})`
                                         }}
                                     />
                                 }

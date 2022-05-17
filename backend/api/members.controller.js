@@ -4,19 +4,20 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { toPng } from "jdenticon"
 import { writeFileSync } from "fs"
-import membersSchema from "../schema/members.validation.schema.js"
-import membersUpdateSchema from "../schema/members.update.schema.js"
+import membersSchema from "../other/members.validation.schema.js"
+import membersUpdateSchema from "../other/members.update.schema.js"
+import twilio from "twilio"
 
 const ObjectId = mongodb.ObjectID
 
 export default class MembersController {
-    
+
     static async GetMembers(req, res, next) {
         const token = req.header('auth-token')
         if (!token) return res.status(401).json({ error: 'Access Denied' })
         try {
             req.user = jwt.verify(token, process.env.TOKEN_SECRET)
-            if(req.user.verified) {
+            if (req.user.verified) {
                 // Add filters
                 let filters = { verified: true }
                 if (req.query.name) {
@@ -34,7 +35,7 @@ export default class MembersController {
             } else {
                 res.status(403).json({ error: "You do not have the permission to do this action" })
             }
-        } catch(e) {
+        } catch (e) {
             res.json({ error: e })
         }
     }
@@ -44,7 +45,7 @@ export default class MembersController {
         if (!token) return res.status(401).json({ error: 'Access Denied' })
         try {
             req.user = jwt.verify(token, process.env.TOKEN_SECRET)
-            if(req.user.admin) {
+            if (req.user.admin) {
                 // Filter only unverified users
                 let filters = { verified: false }
 
@@ -59,13 +60,13 @@ export default class MembersController {
             } else {
                 res.status(403).json({ error: "You do not have the permission to do this action" })
             }
-        } catch(e) {
+        } catch (e) {
             res.json({ error: e })
         }
     }
 
     static async Register(req, res, next) {
-        try {            
+        try {
             // Validate registration information and return error if invalid
             const { error } = await membersSchema.validateAsync(req.body)
             if (error) return res.status(400).json({ error: error.details[0].message })
@@ -76,14 +77,23 @@ export default class MembersController {
             } else if (await membersDAO.checkUserExistsByEmail(req.body.email)) {
                 return res.status(400).json({ error: "User already exists with this email" })
             }
+            
+            // Send verification SMS containing code
+            var code = Math.floor(1000 + Math.random() * 9000)
 
+            twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN).messages.create({
+                body: `The number to verify your TVMC account is ${code}`,
+                from: `${process.env.TWILIO_PHONE_NUMBER}`,
+                to: `${req.body.phone}`,
+            })
+            
             // Upload default avatar
             let png = toPng(req.body.name, 150)
             let url = `public/avatars/${req.body.name}`
             writeFileSync(url, png)
 
             // Insert into database
-            const userInfo = {
+            await membersDAO.createUser({
                 avatar: url,
                 email: req.body.email,
                 name: req.body.name,
@@ -101,36 +111,37 @@ export default class MembersController {
                 },
                 password: await bcrypt.hash(req.body.password, 10),
                 date: Date.now(),
-                permission_level: 0,
                 verified: false,
+                //confirmed: false,
+                //permissions: []
                 admin: false
-            }
-            await membersDAO.createUser(userInfo)
-            res.json({ status: "Please wait until your account is verified." })
-        } catch(err) {
+            })
+
+            res.json({ status: "Please check your phone number for the verification code" })
+        } catch (err) {
             res.status(500).json({ error: err.message })
         }
     }
-    
+
     static async Login(req, res, next) {
         try {
             const user = await membersDAO.findUserByEmail(req.body.email)
             if (user) {
                 if (await bcrypt.compare(req.body.password, user.password)) {
-                    const token = jwt.sign({ 
+                    const token = jwt.sign({
                         _id: user._id,
                         name: user.name,
-                        verified: user.verified, 
+                        verified: user.verified,
                         admin: user.admin
                     }, process.env.TOKEN_SECRET)
-                    res.json({ status: "Successfully Logged In", token: token }) 
+                    res.json({ status: "Successfully logged in", token: token })
                 } else {
                     res.status(400).json({ error: "Email or password is incorrect" })
                 }
             } else {
                 res.status(400).json({ error: "Email or password is incorrect" })
             }
-        } catch(err) {
+        } catch (err) {
             res.status(500).json({ error: err.message })
         }
     }
@@ -146,7 +157,7 @@ export default class MembersController {
             } else {
                 res.status(403).json({ error: "You do not have permission to do this action" })
             }
-        } catch(err) {
+        } catch (err) {
             res.status(400).json({ error: "Invalid Token" })
         }
     }
@@ -162,7 +173,7 @@ export default class MembersController {
             } else {
                 res.status(403).json({ error: "You do not have permission to do this action" })
             }
-        } catch(err) {
+        } catch (err) {
             res.status(400).json({ error: "Invalid Token" })
         }
     }
@@ -183,7 +194,7 @@ export default class MembersController {
             } else {
                 res.status(403).json({ error: "You do not have permission to do this action" })
             }
-        } catch(err) {
+        } catch (err) {
             res.status(500).json({ error: err.message })
         }
     }
