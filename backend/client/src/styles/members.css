@@ -1,0 +1,66 @@
+div.members-banner {
+    background: linear-gradient(0.25turn, #a12828, #641a1a);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+    padding:60px;
+    color:#fff;
+    font-size:25px;
+    text-shadow: 1px 1px 2px #000;
+}
+
+div.members-container {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+div.members-container div.card {
+    display:flex;
+    flex-direction: column;
+    flex-basis:100%;
+    max-width:20%;
+    transition:0.3s;
+    text-align: center;
+}
+
+
+div.members-container h2 a {
+    background: -webkit-linear-gradient(0.15turn, #a12828, #641a1a);
+    -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+    text-decoration:none;
+    letter-spacing:-1px;
+    font-family:'Poppins';
+}
+
+div.profile {
+    width:70%;
+    margin: 0 auto;
+    display:flex;
+    flex-wrap: nowrap;
+    font-weight: 100;
+    text-align:center;
+}
+
+div.profile h1 {
+    background: -webkit-linear-gradient(0.15turn, #286091, #42a2f7);
+    -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+}
+
+div.profile h2 {
+    margin:0 auto;
+    font-weight: 300;
+    color:#286091;
+}
+
+div.profile div.description {
+    font-weight:100;
+}
+
+div.profile div.card {
+    padding:30px;
+    margin:15px;
+    width:50%;
+    background-color: rgb(255, 255, 255);
+    border:1px solid #dedede;
+}
