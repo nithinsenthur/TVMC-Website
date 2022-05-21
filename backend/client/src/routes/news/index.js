@@ -6,8 +6,6 @@ import { useHistory } from 'react-router'
 import { useArticles } from '../../services/articles.service'
 import { faPlusSquare, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { makeStyles } from '@material-ui/core/styles'
-import Pagination from '@mui/material/Pagination'
 import Panel from './panel'
 import '../../styles/articles.css'
 
@@ -20,17 +18,17 @@ export default function NewsIndex({ title, page }) {
     const [pageNumbers, setPageNumbers] = useState()
     const [isLoading, setLoading] = useState(true)
 
-    // adjust style of Material UI pagination component
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            "& > *": {
-                marginTop: theme.spacing(2),
-                justifyContent: "center",
-                display: 'flex'
-            }
-        }
-    }))
-    const classes = useStyles()
+    // // adjust style of Material UI pagination component
+    // const useStyles = makeStyles((theme) => ({
+    //     root: {
+    //         "& > *": {
+    //             marginTop: theme.spacing(2),
+    //             justifyContent: "center",
+    //             display: 'flex'
+    //         }
+    //     }
+    // }))
+    // const classes = useStyles()
 
     // Retrieve articles for current page
     useEffect(() => {
@@ -68,7 +66,7 @@ export default function NewsIndex({ title, page }) {
                     }
                 </div>
             }
-            <div className="pagination">
+            {/* <div className="pagination">
                 <Pagination
                     className={classes.root}
                     page={page}
@@ -79,7 +77,7 @@ export default function NewsIndex({ title, page }) {
                     }}
                     size="large"
                 />
-            </div>
+            </div> */}
         </div>
     )
 }

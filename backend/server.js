@@ -19,5 +19,9 @@ app.get('/public/avatars/:id', (req, res) => {
     res.sendFile(`/public/images/${id}`)
 })
 
+if(process.env.NODE_ENV === 'production') {
+    app.use('*', express.static('client/build'))
+}
+
 export default app 
 
