@@ -1,25 +1,26 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Success, Alert } from '../../components/Global'
-import ReactQuill from 'react-quill'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useArticles } from '../../services/ArticlesService'
-import 'react-quill/dist/quill.snow.css'
+import { useQuill } from "react-quilljs"
+import "quill/dist/quill.snow.css"
 
 export default function CreateArticle() {
+
+    const { quill, quillRef } = useQuill()
 
     const { post } = useArticles()
     const [description, setDescription] = useState()
     const [title, setTitle] = useState()
-    const [content, setContent] = useState('')
     const [img, setImg] = useState()
     const [error, setError] = useState()
     const [response, setResponse] = useState()
 
     async function handleSubmit(e) {
         e.preventDefault()
-        let res = await post(title, description, content, img)
+        let res = await post(title, description, quillRef, img)
         if (res.error) {
             setError(res.error)
         } else {
@@ -47,7 +48,9 @@ export default function CreateArticle() {
                             <label for="description">Description </label>
                             <input type="text" id="description" onChange={({ target }) => setDescription(target.value)} required />
                         </div>
-                        <ReactQuill theme="snow" value={content} onChange={setContent} required />
+                        <div>
+                            <div ref={quillRef} />
+                        </div>
                         <div>
                             <label for="img">Select image </label>
                             <input type="file" id="img" name="img" accept="image/*" onChange={({ target }) => setImg(target.files[0])} />
