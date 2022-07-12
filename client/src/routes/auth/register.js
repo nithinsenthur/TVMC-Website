@@ -1,18 +1,16 @@
 import React, { useState, useRef } from 'react'
 import { useHistory } from 'react-router'
 import { motion } from 'framer-motion'
-import { Alert, Success } from '../../components/global'
-import ReCAPTCHA from "react-google-recaptcha"
-import { useAuth } from '../../services/users.service'
+import { Alert, Success } from '../../components/Global'
+import { useAuth } from '../../services/UsersService'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faList } from '@fortawesome/free-solid-svg-icons'
 import '../../styles/auth.css'
 
 export default function Register() {
 
-    const { register } = useAuth()
     const history = useHistory()
-
+    const { register, setToken } = useAuth()
     const [error, setError] = useState()
     const [response, setResponse] = useState()
 
@@ -55,10 +53,19 @@ export default function Register() {
                     zipcode: zipcode.current.value,
                     ...(street.current.value && { street: street.current.value })
                 }
-        },
-            setError,
-            setResponse)
-        if (response) history.push('/login')
+        }).then((res) => {
+            // show error or set token and redirect to SMS verification page
+            if(res.error) {
+                setError(res.error)
+            } else {
+                setResponse(res.status)
+                setToken(res.token)
+                localStorage.setItem('token', res.token)
+                setTimeout(() => { 
+                    history.go(0)
+                }, 2000)
+            }
+        })
     }
 
     return (
@@ -139,7 +146,6 @@ export default function Register() {
                                     <option value="Psychiatry">Psychiatry</option>
                                     <option value="Radiation oncology">Radiation oncology</option>
                                     <option value="Medical oncology">Medical oncology</option>
-                                    <option value="Surgery">Surgery</option>
                                     <option value="Nephrology">Nephrology</option>
                                     <option value="Endocrinology">Endocrinology</option>
                                     <option value="Pulmonology">Pulmonology</option>
@@ -148,7 +154,17 @@ export default function Register() {
                                     <option value="Hematology">Hematology</option>
                                     <option value="Infectious disease">Infectious disease</option>
                                     <option value="Intensive Care Medicine">Intensive Care Medicine</option>
-                                    <option value="Other">Other</option>
+                                    <option value="General (Surgery)">General (Surgery)</option>
+                                    <option value="Gastroenterology (Surgery)">Gastroenterology (Surgery)</option>
+                                    <option value="Neurosurgery (Surgery)">Neurosurgery (Surgery)</option>
+                                    <option value="Orthopedics (Surgery)">Orthopedics (Surgery)</option>
+                                    <option value="Urology (Surgery)">Urology (Surgery)</option>
+                                    <option value="Hepatobiliary (Surgery)">Hepatobiliary (Surgery)</option>
+                                    <option value="Colorectal (Surgery)">Colorectal (Surgery)</option>
+                                    <option value="Vascular (Surgery)">Vascular (Surgery)</option>
+                                    <option value="Head and Neck (Surgery)">Head and Neck (Surgery)</option>
+                                    <option value="Cardiothoracic (Surgery)">Cardiothoracic (Surgery)</option>
+                                    <option value="Other" selected>Other</option>
                                 </select>
                             </div>
                             <div>
@@ -156,6 +172,7 @@ export default function Register() {
                                 <input
                                     type="text"
                                     id="phone"
+                                    placeholder="Include Country Code and no Hyphens"
                                     ref={phone}
                                     required
                                 />

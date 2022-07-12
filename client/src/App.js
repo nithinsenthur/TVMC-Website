@@ -1,19 +1,21 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
-import LogIn from './routes/auth/login'
-import LogOut from './routes/auth/logout'
-import Home from './routes/home/home'
-import Register from './routes/auth/register'
+import LogIn from './routes/auth/Login'
+import LogOut from './routes/auth/Logout'
+import Home from './routes/home/Home'
+import Register from './routes/auth/Register'
+import Verify from './routes/auth/Verify'
 import Members from './routes/members/members'
 import News from './routes/news/news'
-import Header from './components/header'
-import Footer from './components/footer'
-import About from './routes/other/about'
-import Bylaws from './routes/other/bylaws'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import About from './routes/other/About'
+import Bylaws from './routes/other/Bylaws'
 import UserSettings from './routes/settings/user/user.settings'
 import AdminDashboard from './routes/settings/admin/admin.dashboard'
-import { useAuth } from './services/users.service'
-import './styles/global.css'
+import { useAuth } from './services/UsersService'
+import './styles/Global.css'
+import NotFound from './routes/other/NotFound'
 
 export default function App() {
 
@@ -21,34 +23,44 @@ export default function App() {
 
     return (
         <div id="wrapper">
+            {
+            (isVerified() || !isLoggedIn())
+            ?
             <BrowserRouter>
                 <Header />
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/members">
-                        {isVerified() ? <Members /> : <Redirect to="/login" />}
+                        {isLoggedIn() ? <Members /> : <Redirect to="/login" />}
                     </Route>
-                    <Route path="/login">
+                    <Route exact path="/login">
                         {isLoggedIn() ? <Redirect to="/" /> : <LogIn />}
                     </Route>
-                    <Route path="/logout">
+                    <Route exact path="/logout">
                         {isLoggedIn() ? <LogOut /> : <LogIn />}
                     </Route>
-                    <Route path="/register">
+                    <Route exact path="/register">
                         {isLoggedIn() ? <Redirect to="/" /> : <Register />}
                     </Route>
+                    <Route path="/verify">
+                        {!isVerified() && isLoggedIn() ? <Verify /> : <Redirect to="/" /> }
+                    </Route>
                     <Route path="/news" component={News} />
-                    <Route path="/bylaws" component={Bylaws} />
-                    <Route path="/about" component={About} />
+                    <Route exact path="/bylaws" component={Bylaws} />
+                    <Route exact path="/about" component={About} />
                     <Route path ="/settings">
                         {isLoggedIn() ? <UserSettings /> : <Redirect to="/login" />}
                     </Route>
                     <Route path ="/admin/dashboard">
                         {isAdmin() ? <AdminDashboard /> : <Redirect to="/login" />}
                     </Route>
+                    <Route component={NotFound} />
                 </Switch>
                 <Footer />
             </BrowserRouter>
+            :
+            <Verify />
+            }
         </div>
     )
 }

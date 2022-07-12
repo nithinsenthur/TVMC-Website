@@ -50,9 +50,41 @@ div#home-header {
 
 div.latest-news-container {
     display: flex;
+    flex-direction: column;
 }
 
-div.latest-news-container div.panel img {
-    width:100%;
+div.latest-news-container div.panel {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
 }
 
+div.latest-news-container div.info {
+    position: absolute;
+    max-width: 60%;
+    bottom:40px;
+    left:40px;
+    color: #fff;
+    text-shadow: 1px 1px 5px #000;
+}
+
+div.latest-news-container div.info h3 {
+    font-size: 40px;
+    margin: 0;
+}
+
+div.latest-news-container div.info a {
+    display: inline-block;
+    padding: 12px 15px;
+    border: 1px solid #fff;
+    text-decoration: none;
+    color: inherit;
+}
+
+div.latest-news-container div.info a:hover {
+    background-color: #fff;
+    color:#000;
+    transition: 0.3s;
+    text-shadow: none;
+}

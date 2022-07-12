@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCogs } from '@fortawesome/free-solid-svg-icons'
-import { useArticles } from '../../services/articles.service'
+import { useArticles } from '../../services/ArticlesService'
 import LatestNewsPanel from './LatestNewsPanel'
-import '../../styles/home.css'
+import '../../styles/Home.css'
 
 export default function Home() {
 
@@ -18,7 +18,7 @@ export default function Home() {
         setArticles(res.articles)
         setLoading(false)
       })
-  }, [])
+  }, [retrieve])
 
   return (
     <div>
@@ -45,7 +45,6 @@ export default function Home() {
             return <LatestNewsPanel 
               key={article._id}
               title={article.title}
-              description={article.description}
               img={article.img}
             />
           })

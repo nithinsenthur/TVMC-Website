@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Success, Alert } from '../../components/global'
+import { Success, Alert } from '../../components/Global'
 import ReactQuill from 'react-quill'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useArticles } from '../../services/articles.service'
+import { useArticles } from '../../services/ArticlesService'
 import 'react-quill/dist/quill.snow.css'
 
 export default function CreateArticle() {

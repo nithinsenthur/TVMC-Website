@@ -4,13 +4,16 @@ export default Joi.object({
     email: Joi.string()
         .email({ minDomainSegments: 2 }),
     password: Joi.string()
-        .min(6),
+        .min(8)
+        .max(20),
     interests: Joi.array()
         .items(Joi.string()
         .valid('Research', 'Teaching', 'Career Guidance', 'Charity and Social Work', 'Organizing Events')),
     phone: Joi.string()
-        .length(10)
-        .pattern(/^[0-9]+$/),
+        .min(11)
+        .max(13)
+        .pattern(/^[0-9]+$/)
+        .error(new Error("Make sure your phone number is listed without any hyphens and includes the country code (e.g. 12223334444)")),
     description: Joi.string()
         .max(1000),
     address: Joi.object({

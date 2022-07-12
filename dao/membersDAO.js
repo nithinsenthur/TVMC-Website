@@ -1,7 +1,4 @@
-import mongodb from "mongodb"
 import { unlinkSync } from "fs"
-
-const ObjectId = mongodb.ObjectID
 
 let members
 
@@ -52,9 +49,25 @@ export default class membersDAO {
         }
     }
 
+    static async numberOfUsers() {
+        try {
+            return await members.countDocuments()
+        } catch (e) {
+            console.error(`Unable to retrieve number of users: ${e}`)
+        }
+    }
+
     static async findUserByEmail(email) {
         try {
             return await members.findOne({ email: email })
+        } catch (e) {
+            console.error(`Unable to find user: ${e}`)
+        }
+    }
+
+    static async findUserById(id) {
+        try {
+            return await members.findOne({ _id: id })
         } catch (e) {
             console.error(`Unable to find user: ${e}`)
         }
@@ -89,7 +102,7 @@ export default class membersDAO {
 
     static async updateOne(id, update) {
         try {
-            return await members.updateOne({ _id: ObjectId(id) }, {
+            return await members.updateOne({ _id: id }, {
                 $set: {
                     ...(update.email && { email: update.email }),
                     ...(update.password && { password: await bcrypt.hash(update.password, 10) }),
@@ -126,10 +139,9 @@ export default class membersDAO {
 
     static async verifyOne(id) {
         try {
-            return await members.updateOne({ _id: ObjectId(id) }, {
-                $set: {
-                    verified: true
-                }
+            return await members.updateOne({ _id: id }, {
+                $set: { verified: true },
+                $unset: { PhoneNumberVerificationCode: "" }
             })
         } catch(e) {
             console.error(`Unable to verify member: ${e}`)

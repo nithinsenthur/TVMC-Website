@@ -2,13 +2,17 @@ import membersDAO from "../dao/membersDAO.js"
 import mongodb from "mongodb"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+import twilio from "twilio"
 import { toPng } from "jdenticon"
 import { writeFileSync } from "fs"
 import membersSchema from "../other/members.validation.schema.js"
 import membersUpdateSchema from "../other/members.update.schema.js"
-import twilio from "twilio"
+
+if (process.env.NODE_ENV !== 'production') dotenv.config()
 
 const ObjectId = mongodb.ObjectID
+const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
 
 export default class MembersController {
 
@@ -45,7 +49,7 @@ export default class MembersController {
         if (!token) return res.status(401).json({ error: 'Access Denied' })
         try {
             req.user = jwt.verify(token, process.env.TOKEN_SECRET)
-            if (req.user.admin) {
+            if (req.user.permissions.admin) {
                 // Filter only unverified users
                 let filters = { verified: false }
 
@@ -79,12 +83,11 @@ export default class MembersController {
             }
             
             // Send verification SMS containing code
-            var code = Math.floor(1000 + Math.random() * 9000)
-
-            twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN).messages.create({
-                body: `The number to verify your TVMC account is ${code}`,
+            let PhoneNumberVerificationCode = Math.floor(1000 + Math.random() * 9000)
+            client.messages.create({
+                body: `The number to verify your TVMC account is ${PhoneNumberVerificationCode}`,
                 from: `${process.env.TWILIO_PHONE_NUMBER}`,
-                to: `${req.body.phone}`,
+                to: `+${req.body.phone}`,
             })
             
             // Upload default avatar
@@ -92,8 +95,12 @@ export default class MembersController {
             let url = `public/avatars/${req.body.name}`
             writeFileSync(url, png)
 
+            // set id as the nth user
+            const id = await membersDAO.numberOfUsers() + 1;
+
             // Insert into database
             await membersDAO.createUser({
+                _id: id,
                 avatar: url,
                 email: req.body.email,
                 name: req.body.name,
@@ -112,12 +119,21 @@ export default class MembersController {
                 password: await bcrypt.hash(req.body.password, 10),
                 date: Date.now(),
                 verified: false,
-                //confirmed: false,
-                //permissions: []
-                admin: false
+                PhoneNumberVerificationCode: PhoneNumberVerificationCode,
+                permissions: {
+                    admin: false
+                }
             })
 
-            res.json({ status: "Please check your phone number for the verification code" })
+            // generate token
+            const token = jwt.sign({
+                _id: id,
+                name: req.body.name,
+                verified: false,
+                permissions: { admin: false }
+            }, process.env.TOKEN_SECRET)
+
+            res.json({ status: "Please check your phone number for the verification code", token: token })
         } catch (err) {
             res.status(500).json({ error: err.message })
         }
@@ -132,7 +148,7 @@ export default class MembersController {
                         _id: user._id,
                         name: user.name,
                         verified: user.verified,
-                        admin: user.admin
+                        permissions: user.permissions
                     }, process.env.TOKEN_SECRET)
                     res.json({ status: "Successfully logged in", token: token })
                 } else {
@@ -146,14 +162,14 @@ export default class MembersController {
         }
     }
 
-    static async DeleteMember(req, res, next) {
+    static async Delete(req, res, next) {
         const token = req.header('auth-token')
         if (!token) return res.status(401).json({ error: 'Access Denied' })
         try {
             req.user = jwt.verify(token, process.env.TOKEN_SECRET)
-            if (req.user.admin) {
+            if (req.user.permissions.admin) {
                 await membersDAO.deleteOne({ _id: ObjectId(req.body._id) })
-                res.json({ status: "success" })
+                res.json({ status: "Success" })
             } else {
                 res.status(403).json({ error: "You do not have permission to do this action" })
             }
@@ -162,23 +178,32 @@ export default class MembersController {
         }
     }
 
-    static async VerifyMember(req, res, next) {
+    static async Verify(req, res, next) {
         const token = req.header('auth-token')
         if (!token) return res.status(401).json({ error: "Access Denied" })
         try {
+            // Verify the code is correct, update member to verified, and re-send token
             req.user = jwt.verify(token, process.env.TOKEN_SECRET)
-            if (req.user.admin) {
-                await membersDAO.verifyOne(req.body._id)
-                res.json({ status: "success" })
+            const user = await membersDAO.findUserById(req.user._id)
+            if(user.PhoneNumberVerificationCode == req.body.PhoneNumberVerificationCode) 
+            {
+                await membersDAO.verifyOne(req.user._id)
+                const newToken = jwt.sign({
+                    _id: user._id,
+                    name: user.name,
+                    verified: true,
+                    permissions: user.permissions
+                }, process.env.TOKEN_SECRET)
+                res.json({ status: "You have successfully verified your account", token: newToken })
             } else {
-                res.status(403).json({ error: "You do not have permission to do this action" })
+                res.status(403).json({ error: "You have entered an incorrect code" })
             }
         } catch (err) {
-            res.status(400).json({ error: "Invalid Token" })
+            res.status(400).json({ error: err.message })
         }
     }
 
-    static async updateProfile(req, res, next) {
+    static async Edit(req, res, next) {
         const token = req.header('auth-token')
         if (!token) return res.status(401).json({ error: "Access Denied" })
         try {
@@ -188,7 +213,7 @@ export default class MembersController {
 
             // Verify user perms and update
             req.user = jwt.verify(token, process.env.TOKEN_SECRET)
-            if (req.user.admin || req.user._id == ObjectId(req.body._id)) {
+            if (req.user.permissions.admin || req.user._id == req.body._id) {
                 await membersDAO.updateOne(req.body._id, req.body.update)
                 res.json({ status: "Successfully Updated Profile" })
             } else {

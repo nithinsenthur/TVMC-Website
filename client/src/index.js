@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthProvider } from './services/users.service'
+import { AuthProvider } from './services/UsersService'
 import ReactDOM from 'react-dom'
 import App from './App'
 

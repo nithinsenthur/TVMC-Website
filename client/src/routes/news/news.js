@@ -4,7 +4,7 @@ import CreateArticle from './create.article'
 import EditArticle from './edit.article' 
 import DeleteArticle from './delete.article'
 import Article from './article'
-import { useAuth } from '../../services/users.service'
+import { useAuth } from '../../services/UsersService'
 import '../../styles/articles.css'
 import NewsIndex from './index'
 
@@ -26,7 +26,7 @@ export default function News() {
                 <Route path={`${url}/create`}>
                     {isAdmin() ? <CreateArticle /> : <Redirect to="/news" /> }
                 </Route>
-                <Route exact path={`${url}/:title`} component={Article} />
+                <Route path={`${url}/:title`} component={Article} />
                 <Route path={`${url}/edit/:article_title`}>
                     {isAdmin() ? <EditArticle /> : <Redirect to="/news" /> }
                 </Route>

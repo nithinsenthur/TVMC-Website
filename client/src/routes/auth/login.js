@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Alert } from '../../components/global'
+import { Alert } from '../../components/Global'
 import { Link } from 'react-router-dom'
 import ReCAPTCHA from "react-google-recaptcha"
-import { useAuth } from '../../services/users.service'
+import { useAuth } from '../../services/UsersService'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
 import '../../styles/auth.css'

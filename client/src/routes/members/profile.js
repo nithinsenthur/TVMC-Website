@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useParams } from 'react-router'
-import { useAuth } from '../../services/users.service'
-import { Alert, Loading, Avatar } from '../../components/global'
+import { useAuth } from '../../services/UsersService'
+import { Loading, Avatar } from '../../components/Global'
 import config from "../../config.json"
+import NotFound from '../other/NotFound'
 
 export default function Profile() {
 
@@ -38,7 +39,7 @@ export default function Profile() {
                 >
                     {(error
                         ?
-                        <Alert message={error} />
+                        <NotFound />
                         :
                         <div className="profile">
                             <div className="card">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Loading, Alert } from '../../components/global'
+import { Loading, Alert } from '../../components/Global'
 import Tile from './tile'
-import { useAuth } from '../../services/users.service'
+import { useAuth } from '../../services/UsersService'
 
 export default function MembersIndex({ query }) {
 

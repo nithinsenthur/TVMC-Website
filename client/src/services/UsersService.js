@@ -64,20 +64,19 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', response.token)
         }
     }
-
-    const verify = async (id) => {
-        await fetch(`${config.siteURL}/api/members/verify`, {
+    const verify = async (code) => {
+        // also set user token to verified
+        return await fetch(`${config.siteURL}/api/members/verify`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'auth-token': token
             },
             body: JSON.stringify({
-                _id: id
+                PhoneNumberVerificationCode: code
             })
         }).then(response => response.json())
     }
-
     const deleteMember = async (id) => {
         await fetch(`${config.siteURL}/api/members/delete`, {
             method: 'DELETE',
@@ -96,21 +95,14 @@ export const AuthProvider = ({ children }) => {
         setToken(null)
     }
 
-    const register = async (user, cb, respond) => {
-        let response = await fetch(`${config.siteURL}/api/members/register`, {
+    const register = async (user) => {
+        return await fetch(`${config.siteURL}/api/members/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
         }).then(response => response.json())
-
-        if (response.error) {
-            cb(response.error)
-        } else {
-            cb()
-            respond(response.status)
-        }
     }
 
     const edit = async (id, update) => {
@@ -131,7 +123,8 @@ export const AuthProvider = ({ children }) => {
         const token = localStorage.getItem('token')
         if (!token) return false
         const user = jwt_decode(token)
-        if (user.admin) return true
+        console.log(user.permissions)
+        if (user.permissions.admin) return true
         else return false
     }
 

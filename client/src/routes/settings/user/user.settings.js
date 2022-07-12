@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Alert, Success } from '../../../components/global'
+import { Alert, Success } from '../../../components/Global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../../../services/users.service'
+import { useAuth } from '../../../services/UsersService'
 import '../../../styles/settings.css'
 
 export default function UserSettings() {

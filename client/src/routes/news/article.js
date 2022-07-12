@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useParams, Link } from 'react-router-dom'
 import { Markup } from 'interweave'
-import { Alert, Loading } from '../../components/global'
-import { useArticles } from '../../services/articles.service'
-import { useAuth } from '../../services/users.service'
+import { Loading } from '../../components/Global'
+import { useArticles } from '../../services/ArticlesService'
+import { useAuth } from '../../services/UsersService'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare, faTimesCircle, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faLinkedinIn, faTwitter } from "@fortawesome/free-brands-svg-icons"
 import config from "../../config.json"
+import NotFound from '../other/NotFound'
 
 export default function Article() {
 
@@ -39,13 +40,12 @@ export default function Article() {
                 <Loading />
                 : error
                     ?
-                    <Alert message={error} />
+                    <NotFound />
                     :
                     <div className="article-wrapper">
                         <motion.div
                             initial={{ y: -100 }}
                             animate={{ y: 0 }}
-                            transition={{ type: "spring", stiffness: 50 }}
                         >
                             <div className="banner">
                                 {article.img
@@ -64,7 +64,7 @@ export default function Article() {
                                 <div className="article-header">
                                     <h1 className="article-title">{article.title}</h1>
                                     <p className="article-info">
-                                        {new Date(article.date).toDateString()} | By <strong><Link to={`members/${article.name}`}>{article.name}</Link></strong>
+                                        {new Date(article.date).toDateString()} | By <strong><Link to={`/members/${article.name}`}>{article.name}</Link></strong>
                                     </p>
                                     <div className="article-social-media-buttons">
                                         <ul>

@@ -1,20 +1,15 @@
 import articlesDAO from "../dao/articlesDAO.js";
-import mongodb from "mongodb"
 import jwt from "jsonwebtoken"
-
-const ObjectId = mongodb.ObjectID
 
 export default class ArticlesController {
     
     static async apiGetArticles(req, res, next) {
-
         let page = parseInt(req.query.page, 10)-1
         let articlesPerPage = req.query.articlesPerPage ? parseInt(req.query.articlesPerPage) : 20
         let filters = {}
         if (req.query.title) {
             filters.title = req.query.title
         }
-
         const { articlesList, totalNumArticles } = await articlesDAO.getArticles({ 
             filters,
             page,
@@ -33,10 +28,10 @@ export default class ArticlesController {
             const token = req.header('auth-token')
             if (!token) return res.status(401).json({ error: 'Access Denied' })
             else {
-                req.user = jwt.verify(token, process.env.TOKEN_SECRET)
-                if (req.user.admin) {
+                req.user = jwt.verify(token, process.env.TOKEN_SECRET)                
+                if (req.user.permissions.admin) {
                     articlesDAO.createOne({
-                        user: ObjectId(req.body.user_id),
+                        user: req.body.user_id,
                         name: req.body.name,
                         date: Date.now(),
                         title: req.body.title,
@@ -60,7 +55,7 @@ export default class ArticlesController {
             if (!token) return res.status(401).json({ error: 'Access Denied' })
             else {
                 req.user = jwt.verify(token, process.env.TOKEN_SECRET)
-                if (req.user.admin) {
+                if (req.user.permissions.admin) {
                     articlesDAO.editOne(req.body.article_title, { content: req.body.content, 
                         title: req.body.title, 
                         description: req.body.description })
@@ -80,7 +75,7 @@ export default class ArticlesController {
             if (!token) return res.status(401).json({ error: 'Access Denied' })
             else {
                 req.user = jwt.verify(token, process.env.TOKEN_SECRET)
-                if (req.user.admin) {
+                if (req.user.permissions.admin) {
                     articlesDAO.deleteOne(req.body.title)
                     res.json({ status: `The article "${req.body.title}" has been deleted` })
                 } else { 

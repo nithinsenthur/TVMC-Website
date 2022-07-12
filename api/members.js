@@ -20,9 +20,9 @@ membersRouter
     .get('/unverified', MembersController.GetUnverifiedMembers)
     .post('/register', MembersController.Register)
     .post('/login', MembersController.Login)
-    .delete('/delete', MembersController.DeleteMember)
-    .put('/verify', MembersController.VerifyMember)
-    .put('/edit', MembersController.updateProfile)
+    .delete('/delete', MembersController.Delete)
+    .put('/verify', MembersController.Verify)
+    .put('/edit', MembersController.Edit)
 
 export default membersRouter
 

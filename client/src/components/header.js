@@ -4,11 +4,9 @@ import { motion } from 'framer-motion'
 import { useHistory } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-    faNewspaper, faUsers, faIdCard, faKey, faPhotoVideo,
-    faComments, faUserCircle, faCogs, faChartLine, faDoorClosed, faStethoscope,
-    faChevronDown
+    faIdCard, faKey, faUserCircle, faCogs, faChartLine, faDoorClosed, faChevronDown
 } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../services/users.service'
+import { useAuth } from '../services/UsersService'
 
 export default function Header() {
 
@@ -34,8 +32,6 @@ export default function Header() {
                         {isVerified() && <li><Link to="/members">Members</Link></li>}
                         <li><Link to="/about"> About</Link></li>
                         <li><Link to="/news">News</Link></li>
-                        <li><Link to="/gallery">Gallery</Link></li>
-                        <li><Link to="/forums">Forums</Link></li>
                     </ul>
                 </div>
             </div>
