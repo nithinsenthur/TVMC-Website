@@ -5,23 +5,24 @@ import { useParams, useHistory } from 'react-router-dom'
 import { Success, Alert } from '../../components/Global'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
+import { useQuill } from "react-quilljs"
+import "quill/dist/quill.snow.css"
 
 export default function EditArticle() {
+    
+    const { quill, quillRef } = useQuill()
 
     const { edit } = useArticles()
     const history = useHistory()
     const { article_title } = useParams()
     const [description, setDescription] = useState()
     const [title, setTitle] = useState()
-    const [content, setContent] = useState('')
     const [error, setError] = useState()
     const [response, setResponse] = useState()
 
     async function handleSubmit(e) {
         e.preventDefault()
-        let res = await edit(article_title, content, title, description)
+        let res = await edit(article_title, quillRef, title, description)
         if (res.error) {
             setError(res.error)
         } else {
@@ -51,7 +52,9 @@ export default function EditArticle() {
                             <label for="description">Description </label>
                             <input type="text" id="description" onChange={({ target }) => setDescription(target.value)} />
                         </div>
-                        <ReactQuill theme="snow" value={content} onChange={setContent} />
+                        <div>
+                            <div ref={quillRef} />
+                        </div>
                         <motion.button
                             className="form-button"
                             whileHover={{ scale: 1.1 }}
