@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Alert } from '../../components/Global'
 import { Link } from 'react-router-dom'
-import ReCAPTCHA from "react-google-recaptcha"
 import { useAuth } from '../../services/UsersService'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
@@ -63,10 +62,6 @@ export default function LogIn() {
                                 Login
                             </motion.button>
                         </div>
-                        <ReCAPTCHA
-                            onChange={e => setResponseKey(e)}
-                            sitekey="6Lfpes4bAAAAAE97BklqZovcb6tMGAzEig69LOD4"
-                        />
                     </form>
                     <div>
                         Don't have an account? <Link to="/register">Register.</Link>
