@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useParams } from 'react-router'
+import { Markup } from 'interweave'
 import { useAuth } from '../../services/UsersService'
 import { Loading, Avatar } from '../../components/Global'
-import config from "../../config.json"
 import NotFound from '../other/NotFound'
 
 export default function Profile() {
@@ -15,6 +15,7 @@ export default function Profile() {
     const [error, setError] = useState()
 
     useEffect(() => {
+        document.title = name
         getUsers(name)
             .then(res => {
                 if (res.members[0]) {
@@ -44,7 +45,7 @@ export default function Profile() {
                         <div className="profile">
                             <div className="card">
                                 <h1>{member.name}</h1>
-                                {member.avatar && <Avatar url={`${config.siteURL}/${member.avatar}`} />}
+                                {member.avatar && <Avatar url={`${process.env.REACT_APP_SITE_URL}/${member.avatar}`} />}
                                 <h2>{member.role} {member.specialty && <span>| {member.specialty}</span>}</h2>
                                 <strong>Joined:</strong> {new Date(member.date).toDateString()}
                                 <div>
@@ -59,7 +60,7 @@ export default function Profile() {
                                 <div className="card">
                                     <div>
                                         <h1>About Me</h1>
-                                        {member.description}
+                                        <Markup content={member.description} />
                                     </div>
                                 </div>
                             }

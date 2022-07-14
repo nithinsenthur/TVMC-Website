@@ -13,6 +13,7 @@ export default function Home() {
   const { retrieve } = useArticles()
 
   useEffect(() => {
+    document.title = "TVMC Medical College Alumni Association of North America"
     retrieve({ articlesPerPage: 4 })
       .then(res => {
         setArticles(res.articles)

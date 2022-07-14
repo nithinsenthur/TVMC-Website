@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Alert, Success } from '../../../components/Global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../../../services/UsersService'
+import { useQuill } from "react-quilljs"
 import '../../../styles/settings.css'
 
 export default function UserSettings() {
@@ -24,9 +25,14 @@ export default function UserSettings() {
     const [error, setError] = useState()
     const [response, setResponse] = useState()
 
+    const { quill, quillRef } = useQuill()
+
+    useEffect(() => {
+        document.title = "User Settings"
+    }, [])
+
     const changeAddress = async e => {
         e.preventDefault()
-        console.log(`${city.current.value} and ${state.current.value} and ${zipcode.current.value} and ${street.current.value}`)
         await edit(getID(), {
             address: {
                 city: city.current.value,
@@ -56,7 +62,7 @@ export default function UserSettings() {
 
     const changeDescription = async e => {
         e.preventDefault()
-        await edit(getID(), { description: description.current.value })
+        await edit(getID(), { description: quillRef.current.firstChild.innerHTML })
             .then(res => {
                 if (res.error) setError(res.error)
                 else setResponse(res.status)
@@ -239,7 +245,7 @@ export default function UserSettings() {
                         <form onSubmit={changeDescription}>
                             <strong>Profile Description</strong>
                             <div>
-                                <textarea ref={description} />
+                                <div ref={quillRef} />
                             </div>
                             <motion.button
                                 className="form-button"

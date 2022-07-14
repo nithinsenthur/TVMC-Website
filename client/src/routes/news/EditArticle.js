@@ -10,7 +10,7 @@ import "quill/dist/quill.snow.css"
 
 export default function EditArticle() {
     
-    const { quill, quillRef } = useQuill()
+    const { quillRef } = useQuill()
 
     const { edit } = useArticles()
     const history = useHistory()
@@ -22,7 +22,7 @@ export default function EditArticle() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        let res = await edit(article_title, quillRef, title, description)
+        let res = await edit(article_title, quillRef.current.firstChild.innerHTML, title, description)
         if (res.error) {
             setError(res.error)
         } else {

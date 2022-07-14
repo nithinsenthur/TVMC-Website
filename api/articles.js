@@ -11,8 +11,7 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname)
     }
 })
-const maxSize = 10*1024*1024
-const upload = multer({ storage: storage, limits: { fileSize: maxSize }})
+const upload = multer({ storage: storage })
 
 // API endpoints
 articlesRouter

@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 export default function About() {
+
+    useEffect(() => {
+      document.title = "About Us"
+    }, [])
+    
     return (
         <motion.div
             initial={{ scale: 0.5 }}

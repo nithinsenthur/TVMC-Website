@@ -14,7 +14,7 @@ export default function Tile({ member, delayTime }) {
             whileHover={{ scale: 1.025 }}
             transition={{ delay: 0.1 * delayTime }}
             >
-            {member.avatar && <Avatar url={`http://localhost:5000/${member.avatar}`} />}
+            {member.avatar && <Avatar url={`${process.env.REACT_APP_SITE_URL}${member.avatar}`} />}
             <h2><Link to={`${url}/${member.name}`}>{member.name}</Link></h2>
         </motion.div>
     )

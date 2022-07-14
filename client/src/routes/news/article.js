@@ -8,7 +8,6 @@ import { useAuth } from '../../services/UsersService'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare, faTimesCircle, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faLinkedinIn, faTwitter } from "@fortawesome/free-brands-svg-icons"
-import config from "../../config.json"
 import NotFound from '../other/NotFound'
 
 export default function Article() {
@@ -21,6 +20,7 @@ export default function Article() {
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
+        document.title = title;
         retrieve({ title })
             .then(res => {
                 if (res.articles[0]) {
@@ -57,7 +57,7 @@ export default function Article() {
                                                                 rgba(255,255,255,0) 0%, 
                                                                 rgba(0,0,0,0.5) 40%, 
                                                                 rgba(0,0,0,0.6) 100%),
-                                            url(${config.siteURL}/${article.img})`
+                                            url(${process.env.REACT_APP_SITE_URL}/${article.img})`
                                         }}
                                     />
                                 }

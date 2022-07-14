@@ -5,8 +5,8 @@ import LogOut from './routes/auth/Logout'
 import Home from './routes/home/Home'
 import Register from './routes/auth/Register'
 import Verify from './routes/auth/Verify'
-import Members from './routes/members/members'
-import News from './routes/news/news'
+import Members from './routes/members/Members'
+import News from './routes/news/News'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import About from './routes/other/About'
@@ -54,7 +54,7 @@ export default function App() {
                     <Route path ="/admin/dashboard">
                         {isAdmin() ? <AdminDashboard /> : <Redirect to="/login" />}
                     </Route>
-                    <Route component={NotFound} />
+                    <Route component={NotFound} / >
                 </Switch>
                 <Footer />
             </BrowserRouter>

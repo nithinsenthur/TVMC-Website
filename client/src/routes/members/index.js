@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Loading, Alert } from '../../components/Global'
-import Tile from './tile'
+import Tile from './Tile'
 import { useAuth } from '../../services/UsersService'
 
 export default function MembersIndex({ query }) {
@@ -11,6 +11,7 @@ export default function MembersIndex({ query }) {
     const [error, setError] = useState()
 
     useEffect(() => {
+        document.title = "Members"
         if (isLoading) {
             getUsers(query)
                 .then(res => {

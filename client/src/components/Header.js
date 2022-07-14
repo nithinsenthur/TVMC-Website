@@ -20,7 +20,7 @@ export default function Header() {
                 <div className="logo-emblem">
                     <Link to="/">
                         <div className="emblem">
-                            <img src="http://localhost:5000/public/images/image0.jpeg"></img>
+                            <img src="/TVMC.png"></img>
                         </div>
                     </Link>
                 </div>

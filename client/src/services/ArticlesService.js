@@ -1,5 +1,4 @@
 import jwt_decode from 'jwt-decode'
-import config from "../config.json"
 
 export const useArticles = () => {
     return {
@@ -8,7 +7,7 @@ export const useArticles = () => {
             page = null,
             articlesPerPage = null
         } = {}) => {
-            let query = `${config.siteURL}/api/articles/`
+            let query = `${process.env.REACT_APP_SITE_URL}/api/articles/`
             if (title) {
                 query += `?title=${title}`
             } else if (page) {
@@ -31,7 +30,7 @@ export const useArticles = () => {
             articleData.append('content', content)
             articleData.append('img', img)
 
-            return await fetch(`${config.siteURL}/api/articles/create`, {
+            return await fetch(`${process.env.REACT_APP_SITE_URL}/api/articles/create`, {
                 method: 'POST',
                 body: articleData,
                 headers: {
@@ -41,7 +40,7 @@ export const useArticles = () => {
         },
         remove: async (title) => {
             const token = localStorage.getItem('token')
-            return await fetch(`${config.siteURL}/api/articles/delete`, {
+            return await fetch(`${process.env.REACT_APP_SITE_URL}/api/articles/delete`, {
                 method: 'DELETE',
                 headers: {
                     'auth-token': token,
@@ -54,7 +53,7 @@ export const useArticles = () => {
         },
         edit: async (article_title, content = null, title = null, description = null) => {
             const token = localStorage.getItem('token')
-            return await fetch(`${config.siteURL}/api/articles/edit`, {
+            return await fetch(`${process.env.REACT_APP_SITE_URL}/api/articles/edit`, {
                 method: 'PUT',
                 headers: {
                     'auth-token': token,

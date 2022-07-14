@@ -1,12 +1,12 @@
 import React from 'react'
 import { Switch, Route, useRouteMatch, Redirect, useLocation } from 'react-router-dom'
-import CreateArticle from './create.article'
-import EditArticle from './edit.article' 
-import DeleteArticle from './delete.article'
-import Article from './article'
+import CreateArticle from './CreateArticle'
+import EditArticle from './EditArticle' 
+import DeleteArticle from './DeleteArticle'
+import Article from './Article'
 import { useAuth } from '../../services/UsersService'
 import '../../styles/articles.css'
-import NewsIndex from './index'
+import NewsIndex from './Index'
 
 export default function News() {
 
@@ -26,7 +26,7 @@ export default function News() {
                 <Route path={`${url}/create`}>
                     {isAdmin() ? <CreateArticle /> : <Redirect to="/news" /> }
                 </Route>
-                <Route path={`${url}/:title`} component={Article} />
+                <Route exact path={`${url}/:title`} component={Article} />
                 <Route path={`${url}/edit/:article_title`}>
                     {isAdmin() ? <EditArticle /> : <Redirect to="/news" /> }
                 </Route>

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router'
 import { useArticles } from '../../services/ArticlesService'
 import { faPlusSquare, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Panel from './panel'
+import Panel from './Panel'
 import '../../styles/articles.css'
 
 export default function NewsIndex({ title, page }) {
@@ -32,6 +32,7 @@ export default function NewsIndex({ title, page }) {
 
     // Retrieve articles for current page
     useEffect(() => {
+        document.title = "Latest News & Content";
         retrieve({ title, page })
             .then(res => {
                 setArticles(res.articles)

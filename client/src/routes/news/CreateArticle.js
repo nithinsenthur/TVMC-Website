@@ -20,7 +20,7 @@ export default function CreateArticle() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        let res = await post(title, description, quillRef, img)
+        let res = await post(title, description, quillRef.current.firstChild.innerHTML, img)
         if (res.error) {
             setError(res.error)
         } else {

@@ -2,8 +2,8 @@ import React from 'react'
 import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAmbulance } from '@fortawesome/free-solid-svg-icons'
-import MembersIndex from '.'
-import Profile from './profile'
+import MembersIndex from './Index'
+import Profile from './Profile'
 import '../../styles/members.css'
 
 export default function Members() {
