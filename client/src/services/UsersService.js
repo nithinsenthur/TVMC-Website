@@ -123,7 +123,6 @@ export const AuthProvider = ({ children }) => {
         const token = localStorage.getItem('token')
         if (!token) return false
         const user = jwt_decode(token)
-        console.log(user.permissions)
         if (user.permissions.admin) return true
         else return false
     }
