@@ -18,6 +18,7 @@ div.home-page {
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    transition: 3s;
 }
 
 div.home-page-inner {

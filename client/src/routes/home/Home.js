@@ -12,6 +12,7 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true)
   const { retrieve } = useArticles()
 
+  let image = 1
   useEffect(() => {
     document.title = "TVMC Medical College Alumni Association of North America"
     retrieve({ articlesPerPage: 4 })
@@ -19,6 +20,13 @@ export default function Home() {
         setArticles(res.articles)
         setLoading(false)
       })
+    
+    let interval = setInterval(() => {
+      let homepage = document.getElementsByClassName('home-page')[0]
+      homepage.style.backgroundImage = `url("${image}.jpg")`
+      image = (image + 1) % 6
+    }, 4000)
+    return () => clearInterval(interval);
   }, [retrieve])
 
   return (
