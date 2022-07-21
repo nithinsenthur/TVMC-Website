@@ -9,6 +9,10 @@ if (process.env.NODE_ENV !== 'production') {
 }  
 
 const port = process.env.PORT || 8000
+
+// connect to aws
+
+// connect to mongo
 const MongoClient = mongodb.MongoClient
 
 MongoClient.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -19,8 +23,6 @@ MongoClient.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopol
     .then(async client => {
         await membersDAO.injectDB(client)
         await articlesDAO.injectDB(client)
-        //await galleryDAO.injectDB(client)
-        //await forumsDAO.injectDB(client)
         app.listen(port)
     })
 
