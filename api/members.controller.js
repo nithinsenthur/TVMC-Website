@@ -94,7 +94,7 @@ export default class MembersController {
             // Insert into database
             await membersDAO.createUser({
                 _id: id,
-                avatar: url,
+                avatar: 'images/default.png',
                 email: req.body.email,
                 name: req.body.name,
                 class: req.body.class,
