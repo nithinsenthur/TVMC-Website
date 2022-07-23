@@ -13,7 +13,7 @@ export default Joi.object({
         .min(11)
         .max(13)
         .pattern(/^[0-9]+$/)
-        .error(new Error("Make sure your phone number is listed without any hyphens and includes the country code (e.g. 12223334444)")),
+        .error(new Error("Make sure your phone number is listed without any hyphens or parentheses")),
     description: Joi.string()
         .max(1000),
     address: Joi.object({

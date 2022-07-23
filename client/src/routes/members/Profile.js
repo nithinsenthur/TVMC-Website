@@ -5,7 +5,7 @@ import { Markup } from 'interweave'
 import { useAuth } from '../../services/UsersService'
 import { Loading, Avatar } from '../../components/Global'
 import NotFound from '../other/NotFound'
-import { site_url } from '../../config.json'
+import { assetsUrl } from '../../config.json'
 
 export default function Profile() {
 
@@ -46,7 +46,7 @@ export default function Profile() {
                         <div className="profile">
                             <div className="card">
                                 <h1>{member.name}</h1>
-                                {member.avatar && <Avatar url={`${site_url}/${member.avatar}`} />}
+                                {member.avatar && <Avatar url={`${assetsUrl}/${member.avatar}`} />}
                                 <h2>{member.role} {member.specialty && <span>| {member.specialty}</span>}</h2>
                                 <strong>Joined:</strong> {new Date(member.date).toDateString()}
                                 <div>

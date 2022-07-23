@@ -1,5 +1,5 @@
 import mongodb from "mongodb"
-import { unlinkSync } from "fs"
+import { deleteImage } from "../storage.js"
 
 const ObjectId = mongodb.ObjectID
 let articles
@@ -69,7 +69,7 @@ export default class articlesDAO {
         try {
             // Remove article image from storage
             let article = await articles.findOne({ title: title })
-            unlinkSync(article.img, (err) => console.error(err))
+            deleteImage(article.key)
 
             // Delete article
             return await articles.deleteOne({ title: title })

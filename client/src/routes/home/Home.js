@@ -53,7 +53,7 @@ export default function Home() {
             return <LatestNewsPanel 
               key={article._id}
               title={article.title}
-              img={article.img}
+              img={article.key}
             />
           })
         }

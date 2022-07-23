@@ -59,7 +59,7 @@ export default function NewsIndex({ title, page }) {
                                 title={article.title}
                                 date={article.date}
                                 description={article.description}
-                                img={article.img}
+                                img={article.key}
                                 author={article.name}
                                 delayTime={i}
                             />

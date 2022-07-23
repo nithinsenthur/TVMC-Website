@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import jwt_decode from 'jwt-decode'
-import { site_url } from '../config.json'
+import { apiUrl } from '../config.json'
 
 const AuthContext = React.createContext()
 
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
 
     const getUsers = async (username = null) => {
         const token = localStorage.getItem('token')
-        let query = `${site_url}/api/members/`
+        let query = `${apiUrl}/api/members/`
         if(username)
         {
             query += `?name=${username}`
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
     const getUnverifiedUsers = async () => {
         const token = localStorage.getItem('token')
-        let query = `${site_url}/api/members/unverified`
+        let query = `${apiUrl}/api/members/unverified`
         return await fetch(query, {
             method: 'GET',
             headers: {
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const login = async (user, cb) => {
-        let response = await fetch(`${site_url}/api/members/login`, {
+        let response = await fetch(`${apiUrl}/api/members/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
     }
     const verify = async (code) => {
         // also set user token to verified
-        return await fetch(`${site_url}/api/members/verify`, {
+        return await fetch(`${apiUrl}/api/members/verify`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }) => {
         }).then(response => response.json())
     }
     const deleteMember = async (id) => {
-        await fetch(`${site_url}/api/members/delete`, {
+        await fetch(`${apiUrl}/api/members/delete`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const register = async (user) => {
-        return await fetch(`${site_url}/api/members/register`, {
+        return await fetch(`${apiUrl}/api/members/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const edit = async (id, update) => {
-        return await fetch(`${site_url}/api/members/edit`, {
+        return await fetch(`${apiUrl}/api/members/edit`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

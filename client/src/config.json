@@ -1,3 +1,4 @@
 {
-    "site_url": "https://tvmc.herokuapp.com"
+    "apiUrl": "http://tvmcalumniassociationnorthamerica.com",
+    "assetsUrl": "http://assets.tvmcalumniassociationnorthamerica.com"
 }

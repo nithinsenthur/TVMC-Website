@@ -37,7 +37,7 @@ export default class ArticlesController {
                         title: req.body.title,
                         description: req.body.description,
                         content: req.body.content,
-                        ...(req.file && { img: req.file.path })
+                        ...(req.file && { key: req.file.key })
                     })
                     res.json({ status: 'Your article has been posted' })
                 } else {

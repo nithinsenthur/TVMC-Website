@@ -4,8 +4,6 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import twilio from "twilio"
-import { toPng } from "jdenticon"
-import { writeFileSync } from "fs"
 import membersSchema from "../other/members.validation.schema.js"
 import membersUpdateSchema from "../other/members.update.schema.js"
 
@@ -89,11 +87,6 @@ export default class MembersController {
                 from: `${process.env.TWILIO_PHONE_NUMBER}`,
                 to: `+${req.body.phone}`,
             })
-            
-            // Upload default avatar
-            let png = toPng(req.body.name, 150)
-            let url = `public/avatars/${req.body.name}`
-            writeFileSync(url, png)
 
             // set id as the nth user
             const id = await membersDAO.numberOfUsers() + 1;

@@ -18,6 +18,7 @@ export default function Register() {
     const password = useRef()
     const email = useRef()
     const classYear = useRef()
+    const countryCode = useRef()
     const phone = useRef()
     const role = useRef()
     const state = useRef()
@@ -43,7 +44,7 @@ export default function Register() {
                 name: username.current.value,
                 password: password.current.value,
                 ...(classYear.current.value && { class: classYear.current.value }),
-                phone: phone.current.value,
+                phone: countryCode.current.value + phone.current.value,
                 role: role.current.value,
                 specialty: specialty.current.value,
                 interests: interests,
@@ -54,7 +55,6 @@ export default function Register() {
                     ...(street.current.value && { street: street.current.value })
                 }
         }).then((res) => {
-            // show error or set token and redirect to SMS verification page
             if(res.error) {
                 setError(res.error)
             } else {
@@ -168,11 +168,17 @@ export default function Register() {
                                 </select>
                             </div>
                             <div>
+                                <label for="country-code">Country Code </label>
+                                <select id="country-code" ref={countryCode}>
+                                    <option value="1">+1 (United States)</option>
+                                </select>
+                            </div>
+                            <div>
                                 <label for="phone">Phone </label>
                                 <input
                                     type="text"
                                     id="phone"
-                                    placeholder="Include Country Code and no Hyphens"
+                                    placeholder="1112223333"
                                     ref={phone}
                                     required
                                 />

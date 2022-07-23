@@ -1,18 +1,8 @@
 import express from "express"
 import MembersController from "./members.controller.js"
-import multer from "multer"
+import { imageUpload } from "../storage.js"
 
 const membersRouter = express.Router()
-
-// Handle uploading user avatars to disk storage
-const storage = multer.diskStorage({
-    destination: './public/avatars',
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname)
-    }
-})
-const maxSize = 1024*1024
-const upload = multer({ storage: storage, limits: { fileSize: maxSize }})
 
 // API endpoints
 membersRouter
@@ -22,7 +12,6 @@ membersRouter
     .post('/login', MembersController.Login)
     .delete('/delete', MembersController.Delete)
     .put('/verify', MembersController.Verify)
-    .put('/edit', MembersController.Edit)
+    .put('/edit', imageUpload("avatars").single("img"), MembersController.Edit)
 
 export default membersRouter
-

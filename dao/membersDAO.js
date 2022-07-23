@@ -1,7 +1,6 @@
-import { unlinkSync } from "fs"
+import { deleteImage } from "../storage.js"
 
 let members
-
 export default class membersDAO {
     static async injectDB(conn) {
         if (members) return
@@ -127,7 +126,7 @@ export default class membersDAO {
         try {
             // Remove member avatar from storage
             let member = await members.findOne(member)
-            unlinkSync(member.avatar, (err) => console.error(err))
+            deleteImage(member.avatar)
 
             // Delete member
             return await members.deleteOne(member)

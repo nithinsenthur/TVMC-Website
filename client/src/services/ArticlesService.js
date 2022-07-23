@@ -1,5 +1,5 @@
 import jwt_decode from 'jwt-decode'
-import { site_url } from '../config.json'
+import { apiUrl } from '../config.json'
 
 export const useArticles = () => {
     return {
@@ -8,7 +8,7 @@ export const useArticles = () => {
             page = null,
             articlesPerPage = null
         } = {}) => {
-            let query = `${site_url}/api/articles/`
+            let query = `${apiUrl}/api/articles/`
             if (title) {
                 query += `?title=${title}`
             } else if (page) {
@@ -31,7 +31,7 @@ export const useArticles = () => {
             articleData.append('content', content)
             articleData.append('img', img)
 
-            return await fetch(`${site_url}/api/articles/create`, {
+            return await fetch(`${apiUrl}/api/articles/create`, {
                 method: 'POST',
                 body: articleData,
                 headers: {
@@ -41,7 +41,7 @@ export const useArticles = () => {
         },
         remove: async (title) => {
             const token = localStorage.getItem('token')
-            return await fetch(`${site_url}/api/articles/delete`, {
+            return await fetch(`${apiUrl}/api/articles/delete`, {
                 method: 'DELETE',
                 headers: {
                     'auth-token': token,
@@ -54,7 +54,7 @@ export const useArticles = () => {
         },
         edit: async (article_title, content = null, title = null, description = null) => {
             const token = localStorage.getItem('token')
-            return await fetch(`${site_url}/api/articles/edit`, {
+            return await fetch(`${apiUrl}/api/articles/edit`, {
                 method: 'PUT',
                 headers: {
                     'auth-token': token,
