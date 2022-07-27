@@ -1,3 +1,21 @@
+div.auth-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+ 
+
+div.auth-container div.left {
+    width: 30%;
+}
+
+div.auth-container div.right {
+    width: 100%;
+    background-image: url("../images/auth.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 div.auth-form {
     margin: 25px auto;
     padding:10px;

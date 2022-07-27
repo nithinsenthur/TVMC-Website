@@ -69,18 +69,15 @@ export default class MembersController {
 
     static async Register(req, res, next) {
         try {
-            // Validate registration information and return error if invalid
             const { error } = await membersSchema.validateAsync(req.body)
             if (error) return res.status(400).json({ error: error.details[0].message })
 
-            // Check if email or username already exists
             if (await membersDAO.checkUserExistsByName(req.body.name)) {
                 return res.status(400).json({ error: "User already exists with this name" })
             } else if (await membersDAO.checkUserExistsByEmail(req.body.email)) {
                 return res.status(400).json({ error: "User already exists with this email" })
             }
             
-            // Send verification SMS containing code
             let PhoneNumberVerificationCode = Math.floor(1000 + Math.random() * 9000)
             client.messages.create({
                 body: `The number to verify your TVMC account is ${PhoneNumberVerificationCode}`,
@@ -88,13 +85,11 @@ export default class MembersController {
                 to: `+${req.body.phone}`,
             })
 
-            // set id as the nth user
             const id = await membersDAO.numberOfUsers() + 1;
 
-            // Insert into database
             await membersDAO.createUser({
                 _id: id,
-                avatar: 'images/default.png',
+                avatar: "avatar/default.png",
                 email: req.body.email,
                 name: req.body.name,
                 class: req.body.class,
@@ -118,7 +113,6 @@ export default class MembersController {
                 }
             })
 
-            // generate token
             const token = jwt.sign({
                 _id: id,
                 name: req.body.name,

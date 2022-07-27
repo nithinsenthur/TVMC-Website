@@ -13,6 +13,8 @@
     --weight-thin:200;
     --weight-thick:700;
     --box-shadow-thin: 0 5px 15px rgba(0, 0, 0, 0.15);
+    position: relative;
+    min-height: 100vh;
 }
 
 body {
@@ -21,11 +23,9 @@ body {
     font-family: var(--default-font);
 }
 
-#wrapper {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-    justify-content: space-between;
+div.page-container 
+{
+    padding-bottom: 250px;
 }
 
 div.main {
@@ -98,13 +98,13 @@ div.nav li a:hover::before {
     transform: scaleX(1);
 }
 
-div.left {
+div.header div.left {
     display:flex;
     align-items: center;
     padding-left:5vh;
 }
 
-div.right {
+div div.right {
     display:flex;
     align-items: center;
     padding-right:5vh;
@@ -262,6 +262,7 @@ img.member-avatar {
 
 footer {
     width:100%;
+    position:absolute;
     bottom:0;
 }
 

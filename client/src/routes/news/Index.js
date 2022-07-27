@@ -18,19 +18,6 @@ export default function NewsIndex({ title, page }) {
     const [pageNumbers, setPageNumbers] = useState()
     const [isLoading, setLoading] = useState(true)
 
-    // // adjust style of Material UI pagination component
-    // const useStyles = makeStyles((theme) => ({
-    //     root: {
-    //         "& > *": {
-    //             marginTop: theme.spacing(2),
-    //             justifyContent: "center",
-    //             display: 'flex'
-    //         }
-    //     }
-    // }))
-    // const classes = useStyles()
-
-    // Retrieve articles for current page
     useEffect(() => {
         document.title = "Latest News & Content";
         retrieve({ title, page })
@@ -67,18 +54,6 @@ export default function NewsIndex({ title, page }) {
                     }
                 </div>
             }
-            {/* <div className="pagination">
-                <Pagination
-                    className={classes.root}
-                    page={page}
-                    count={pageNumbers}
-                    onChange={(e, page) => {
-                        history.push(`news?page=${page}`)
-                        history.go(0)
-                    }}
-                    size="large"
-                />
-            </div> */}
         </div>
     )
 }

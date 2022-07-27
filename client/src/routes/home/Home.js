@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCogs } from '@fortawesome/free-solid-svg-icons'
 import { useArticles } from '../../services/ArticlesService'
+import Layout from '../../components/Layout'
 import LatestNewsPanel from './LatestNewsPanel'
 import '../../styles/Home.css'
 
@@ -29,7 +30,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div>
+    <Layout>
       <div className="home-page">
         <div className="home-page-inner">
           <div className="main">
@@ -58,7 +59,7 @@ export default function Home() {
           })
         }
       </div>
-    </div>
+    </Layout>
   )
 }
 

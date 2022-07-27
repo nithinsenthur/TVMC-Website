@@ -29,26 +29,27 @@ export default function LogIn() {
         <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
+            className="auth-container"
         >
-            <div className="main">
+            <div className="left">
                 {error && <Alert message={error} />}
                 <div className="auth-form">
                     <h1><FontAwesomeIcon icon={faClipboardCheck} /> Log In</h1>
                     <form onSubmit={handleSubmit}>
                         <div>
-                            <label for="email">Email </label>
                             <input
                                 type="text"
+                                placeholder="E-mail"
                                 id="email"
                                 ref={email}
                                 required
                             />
                         </div>
                         <div>
-                            <label for="password">Password </label>
                             <input
                                 type="password"
                                 id="password"
+                                placeholder="Password"
                                 ref={password}
                                 required
                             />
@@ -68,6 +69,7 @@ export default function LogIn() {
                     </div>
                 </div>
             </div>
+            <div className="right" />
         </motion.div>
     )
 }

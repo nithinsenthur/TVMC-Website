@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Route, useRouteMatch, Redirect, useLocation } from 'react-router-dom'
+import Layout from '../../components/Layout'
 import CreateArticle from './CreateArticle'
 import EditArticle from './EditArticle' 
 import DeleteArticle from './DeleteArticle'
@@ -15,7 +16,7 @@ export default function News() {
     const { url } = useRouteMatch()
 
     return (
-        <div>
+        <Layout>
             <Switch>
                 <Route exact path={url}>
                     <NewsIndex 
@@ -34,6 +35,6 @@ export default function News() {
                     {isAdmin() ? <DeleteArticle /> : <Redirect to="/news" /> }
                 </Route>
             </Switch>
-        </div>
+        </Layout>
     )
 }

@@ -7,8 +7,6 @@ import Register from './routes/auth/Register'
 import Verify from './routes/auth/Verify'
 import Members from './routes/members/Members'
 import News from './routes/news/News'
-import Header from './components/Header'
-import Footer from './components/Footer'
 import About from './routes/other/About'
 import Bylaws from './routes/other/Bylaws'
 import UserSettings from './routes/settings/user/user.settings'
@@ -22,12 +20,11 @@ export default function App() {
     const { isVerified, isLoggedIn, isAdmin } = useAuth()
 
     return (
-        <div id="wrapper">
+        <div>
             {
             (isVerified() || !isLoggedIn())
             ?
             <BrowserRouter>
-                <Header />
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/members">
@@ -56,7 +53,6 @@ export default function App() {
                     </Route>
                     <Route component={NotFound} / >
                 </Switch>
-                <Footer />
             </BrowserRouter>
             :
             <Verify />

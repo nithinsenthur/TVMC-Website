@@ -5,6 +5,7 @@ import { Loading, Alert } from '../../../components/Global'
 import ApplicantTile from './applicant.tile'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChartLine } from '@fortawesome/free-solid-svg-icons'
+import Layout from '../../../components/Layout'
 import '../../../styles/settings.css'
 
 export default function AdminDashboard() {
@@ -29,34 +30,36 @@ export default function AdminDashboard() {
     }, [applicants, getUnverifiedUsers, isLoading])
 
     return (
-        <div className="main">
-            <motion.div
-                initial={{ scale: 0.5 }}
-                animate={{ scale: 1 }}
-                className="settings"
-            >
-                <h1><FontAwesomeIcon icon={faChartLine} /> Admin Dashboard</h1>
-                <h2>Verify Users</h2>
-                {isLoading
-                    ?
-                    <Loading />
-                    :
-                    <div className="applicants-container">
-                        {(error
-                            ?
-                            <Alert message={error} />
-                            :
-                            applicants.map((applicant, i) => {
-                                return <ApplicantTile
-                                    key={applicant._id}
-                                    applicant={applicant}
-                                    delayTime={i}
-                                />
-                            })
-                        )}
-                    </div>
-                }
-            </motion.div>
-        </div>
+        <Layout>
+            <div className="main">
+                <motion.div
+                    initial={{ scale: 0.5 }}
+                    animate={{ scale: 1 }}
+                    className="settings"
+                >
+                    <h1><FontAwesomeIcon icon={faChartLine} /> Admin Dashboard</h1>
+                    <h2>Verify Users</h2>
+                    {isLoading
+                        ?
+                        <Loading />
+                        :
+                        <div className="applicants-container">
+                            {(error
+                                ?
+                                <Alert message={error} />
+                                :
+                                applicants.map((applicant, i) => {
+                                    return <ApplicantTile
+                                        key={applicant._id}
+                                        applicant={applicant}
+                                        delayTime={i}
+                                    />
+                                })
+                            )}
+                        </div>
+                    }
+                </motion.div>
+            </div>
+        </Layout>
     )
 }
