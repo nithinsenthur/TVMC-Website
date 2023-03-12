@@ -3,7 +3,6 @@ import cors from "cors"
 import membersRouter from "./api/members.js"
 import articlesRouter from "./api/articles.js"
 import { resolve } from "path"
-import { findImage } from "./storage.js"
 
 const app = express()
 

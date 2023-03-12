@@ -54,8 +54,12 @@ export default Joi.object({
             "Vascular (Surgery)",
             "Head and Neck (Surgery)",
             "Cardiothoracic (Surgery)",
+            "Cardiology",
+            "Interventional Cardiology",
+            "Interventional Radiology",
             "Other"
             ),
+    institution: Joi.string(),
     role: Joi.string()
         .valid('Student', 'Physician', 'Trainee', 'Guest'),
     interests: Joi.array()
@@ -75,12 +79,15 @@ export default Joi.object({
             .valid(
                 "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", 
                 "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", 
-                "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+                "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "OT"
                 )
             .required(),
         zipcode: Joi.number()
             .integer()
-            .required()
+            .required(),
+        country: Joi.string()
+            .valid("Canada", "United States of America")
+            
     })
 })
 

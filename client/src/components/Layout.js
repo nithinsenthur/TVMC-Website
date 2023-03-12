@@ -115,7 +115,7 @@ export default function Layout({ children }) {
                     </div>
                 </div>
                 <div className="footer-padding">
-                    © 2022 TVMC Alumni Association of North America
+                    © {new Date().getFullYear()} TVMC Alumni Association of North America
                 </div>
             </footer>
         </div>

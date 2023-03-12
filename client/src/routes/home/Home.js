@@ -27,6 +27,10 @@ export default function Home() {
       homepage.style.backgroundImage = `url("${image}.jpg")`
       image = (image + 1) % 6
     }, 4000)
+
+    return () => {
+      clearInterval(interval)
+    }
   }, [])
 
   return (

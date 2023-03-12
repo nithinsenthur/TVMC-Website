@@ -16,15 +16,18 @@ export default Joi.object({
         .error(new Error("Make sure your phone number is listed without any hyphens or parentheses")),
     description: Joi.string()
         .max(1000),
+    institution: Joi.string(),
     address: Joi.object({
         street: Joi.string(),
         city: Joi.string()
             .required(),
         state: Joi.string()
-            .valid("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY")
+            .valid("OT", "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY")
             .required(),
         zipcode: Joi.number()
             .integer()
-            .required()
+            .required(),
+        country: Joi.string()
+            .valid("Canada", "United States of America")
     })
 })

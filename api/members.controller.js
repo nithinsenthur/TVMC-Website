@@ -4,6 +4,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import twilio from "twilio"
+import transporter from "../mail.js"
 import membersSchema from "../other/members.validation.schema.js"
 import membersUpdateSchema from "../other/members.update.schema.js"
 
@@ -72,6 +73,7 @@ export default class MembersController {
             const { error } = await membersSchema.validateAsync(req.body)
             if (error) return res.status(400).json({ error: error.details[0].message })
 
+            // correct this
             if (await membersDAO.checkUserExistsByName(req.body.name)) {
                 return res.status(400).json({ error: "User already exists with this name" })
             } else if (await membersDAO.checkUserExistsByEmail(req.body.email)) {
@@ -94,6 +96,7 @@ export default class MembersController {
                 name: req.body.name,
                 class: req.body.class,
                 specialty: req.body.specialty,
+                institution: req.body.institution,
                 description: '',
                 interests: req.body.interests,
                 role: req.body.role,
@@ -102,7 +105,8 @@ export default class MembersController {
                     street: req.body.address.street,
                     city: req.body.address.city,
                     state: req.body.address.state,
-                    zipcode: req.body.address.zipcode
+                    zipcode: req.body.address.zipcode,
+                    country: req.body.country
                 },
                 password: await bcrypt.hash(req.body.password, 10),
                 date: Date.now(),
@@ -145,6 +149,41 @@ export default class MembersController {
                 res.status(400).json({ error: "Email or password is incorrect" })
             }
         } catch (err) {
+            res.status(500).json({ error: err.message })
+        }
+    }
+
+    static async ForgotPassword(req, res, next) { 
+        try {
+            let user = await membersDAO.findUserByEmail(req.body.email)
+            if(user) {
+                const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 })
+                let info = await transporter.sendMail({
+                    to: req.body.email,
+                    subject: "Link to reset the password of your TVMC account",
+                    text: `Click the link below to reset the password of your TVMC account.\n${process.env.SITE_URL}/reset-password/${token}`
+                })
+            }
+            res.json({ status: "If you registered an account with this email then a link which will expire in an hour should arrive in your inbox" })
+        } catch(err) {
+            res.status(500).json({ error: err.message })
+        }
+    }
+
+    static async ResetPassword(req, res, next) {
+        const token = req.header('reset-token')
+        if (!token) return res.status(401).json({ error: 'Access Denied' })
+        try {
+            req.user = jwt.verify(token, process.env.TOKEN_SECRET)
+
+            // Validate new password and return error if invalid
+            const { error } = await membersUpdateSchema.validateAsync(req.body)
+            if (error) return res.status(400).json({ error: error.details[0].message })
+
+            // update user password
+            await membersDAO.updateOne(req.user._id , { password: req.body.password })
+            res.json({ status: "You have successfully changed your password " })
+        } catch(err) {
             res.status(500).json({ error: err.message })
         }
     }

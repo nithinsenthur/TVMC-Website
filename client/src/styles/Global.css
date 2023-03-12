@@ -5,8 +5,10 @@
 
 :root {
     --primary-color:#337ab7;
+    --primary-color-lightened:#56a0e0;
     --primary-color-darkened:#225079;
     --secondary-color:#252525;
+    --outline-color:#dedede;
     --background-color:#fff;
     --default-font:'Heebo', sans-serif;
     --serif-font:'STIX Two Text', serif;
@@ -311,7 +313,8 @@ div#content {
     padding:10px;
 }
 
-input[type="text"], input[type="email"], select, input[type="number"], input[type="password"], input[type="submit"]  {
+input[type="text"], input[type="email"], select, 
+input[type="number"], input[type="password"], input[type="submit"]  {
     border:0;
     border-bottom:1px solid #d4d4d4;
     font-family:var(--default-font);
@@ -319,7 +322,8 @@ input[type="text"], input[type="email"], select, input[type="number"], input[typ
     transition:0.3s;
 }
 
-input[type="text"]:hover, input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="submit"]:hover {
+input[type="text"]:hover, input[type="email"]:hover, 
+input[type="number"]:hover, input[type="password"]:hover, input[type="submit"]:hover {
     border-bottom:1px solid var(--primary-color-darkened);
 }
 

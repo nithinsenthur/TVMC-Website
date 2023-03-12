@@ -4,7 +4,6 @@ import { imageUpload } from "../storage.js"
 
 const articlesRouter = express.Router()
 
-// API endpoints
 articlesRouter
     .get('/', ArticlesController.apiGetArticles)
     .put('/edit', ArticlesController.editArticle)

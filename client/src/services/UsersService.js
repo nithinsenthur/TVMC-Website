@@ -16,19 +16,23 @@ export const AuthProvider = ({ children }) => {
     })
 
     const getUsers = async (username = null) => {
-        const token = localStorage.getItem('token')
-        let query = `${apiUrl}/api/members/`
-        if(username)
-        {
-            query += `?name=${username}`
-        }
-        return await fetch(query, {
-            method: 'GET',
-            headers: {
-                'auth-token': token
+        try {
+            const token = localStorage.getItem('token')
+            let query = `${apiUrl}/api/members/`
+            if(username)
+            {
+                query += `?name=${username}`
             }
-        })
-        .then(response => response.json())
+            return await fetch(query, {
+                method: 'GET',
+                headers: {
+                    'auth-token': token
+                }
+            })
+            .then(response => response.json())
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     const getUnverifiedUsers = async () => {
@@ -64,19 +68,60 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', response.token)
         }
     }
+
     const verify = async (code) => {
-        // also set user token to verified
-        return await fetch(`${apiUrl}/api/members/verify`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': token
-            },
-            body: JSON.stringify({
-                PhoneNumberVerificationCode: code
-            })
-        }).then(response => response.json())
+        try {
+            return await fetch(`${apiUrl}/api/members/verify`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': token
+                },
+                body: JSON.stringify({
+                    PhoneNumberVerificationCode: code
+                })
+            }).then(response => response.json())
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
+
+    const forgotPassword = async (email) => {
+        try {
+            return await fetch(`${apiUrl}/api/members/forgot-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email
+                })
+            }).then(response => response.json())
+        }
+        catch(err) {
+            console.log(err)
+        }
+    }
+
+    const resetPassword = async (resetToken, password) => {
+        try {
+            return await fetch(`${apiUrl}/api/members/reset-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'reset-token': resetToken
+                },
+                body: JSON.stringify({
+                    password: password
+                })
+            }).then(response => response.json())
+        }
+        catch(err) {
+            console.log(err)
+        }
+    }
+
     const deleteMember = async (id) => {
         await fetch(`${apiUrl}/api/members/delete`, {
             method: 'DELETE',
@@ -169,7 +214,9 @@ export const AuthProvider = ({ children }) => {
         isLoggedIn,
         isVerified,
         getID,
-        getUsername
+        getUsername,
+        forgotPassword,
+        resetPassword
     }
 
     return ( 

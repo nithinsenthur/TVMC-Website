@@ -1,4 +1,5 @@
 import { deleteImage } from "../storage.js"
+import bcrypt from "bcrypt"
 
 let members
 export default class membersDAO {
