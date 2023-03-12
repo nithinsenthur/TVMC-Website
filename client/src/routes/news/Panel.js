@@ -1,11 +1,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { assetsUrl } from '../../config.json'
+import config from '../../config.json'
 
 export default function Panel({ delayTime, img, description, date, title }) {
 
     const { url } = useRouteMatch()
+    let { assetsUrl } = config
 
     return (
         <motion.div

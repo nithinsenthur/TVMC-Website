@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react"
 import jwt_decode from 'jwt-decode'
-import { apiUrl } from '../config.json'
+import config from '../config.json'
 
 const AuthContext = React.createContext()
+
+let { apiUrl } = config
 
 export const useAuth = () => {
     return useContext(AuthContext)

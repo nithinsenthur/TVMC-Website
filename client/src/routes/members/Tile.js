@@ -2,11 +2,12 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { Avatar } from '../../components/Global'
-import { assetsUrl } from '../../config.json'
+import config from '../../config.json'
 
 export default function Tile({ member, delayTime }) {
 
     const { url } = useRouteMatch()
+    let { assetsUrl } = config
 
     return (
         <motion.div 

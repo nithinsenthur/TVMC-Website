@@ -9,9 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare, faTimesCircle, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faLinkedinIn, faTwitter } from "@fortawesome/free-brands-svg-icons"
 import NotFound from '../other/NotFound'
-import { assetsUrl } from '../../config.json'
+import config from '../../config.json'
 
 export default function Article() {
+
+    let { assetsUrl } = config
 
     const { retrieve } = useArticles()
     const { isAdmin } = useAuth()

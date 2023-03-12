@@ -5,9 +5,11 @@ import { Markup } from 'interweave'
 import { useAuth } from '../../services/UsersService'
 import { Loading, Avatar } from '../../components/Global'
 import NotFound from '../other/NotFound'
-import { assetsUrl } from '../../config.json'
+import config from '../../config.json'
 
 export default function Profile() {
+
+    let { assetsUrl } = config
 
     const { name } = useParams()
     const { getUsers } = useAuth()

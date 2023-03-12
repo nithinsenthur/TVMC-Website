@@ -2,9 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { assetsUrl } from '../../config.json'
+import config from '../../config.json'
 
 export default function LatestNewsPanel({ img, title }) {
+
+    let { assetsUrl } = config
+    
     return (
         <div 
             className="panel" 
