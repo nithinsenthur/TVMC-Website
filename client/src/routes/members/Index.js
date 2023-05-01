@@ -11,7 +11,7 @@ export default function MembersIndex({ query }) {
     const [error, setError] = useState()
 
     useEffect(() => {
-        document.title = "Members"
+        document.title = "Members"        
         if (isLoading) {
             getUsers(query)
                 .then(res => {
