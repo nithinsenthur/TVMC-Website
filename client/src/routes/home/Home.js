@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCogs } from '@fortawesome/free-solid-svg-icons'
+import { faStethoscope } from '@fortawesome/free-solid-svg-icons'
 import { useArticles } from '../../services/ArticlesService'
 import Layout from '../../components/Layout'
 import LatestNewsPanel from './LatestNewsPanel'
@@ -43,10 +43,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <FontAwesomeIcon icon={faCogs} /> This site is currently under construction.
-              <div className="message-description">
-                Please check back soon.
-              </div>
+              <FontAwesomeIcon icon={faStethoscope} /> Welcome.
             </motion.div>
           </div>
         </div>
