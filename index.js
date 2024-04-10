@@ -10,12 +10,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 const port = process.env.PORT || 8000
 
-// connect to aws
-
 // connect to mongo
 const MongoClient = mongodb.MongoClient
 
-MongoClient.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+MongoClient.connect(process.env.DB_URI)
     .catch(err => {
         console.error(err.stack)
         process.exit(1)
