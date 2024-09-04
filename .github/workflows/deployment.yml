@@ -35,13 +35,19 @@ jobs:
       - name: Retrieve task definition from GitHub Secret
         run: echo "${{ secrets.ECS_TASK_DEFINITION }}" > task-definition.json
 
-      - name: Fill in the new image IDs in the ECS task definition
-        id: task-def
+      - name: Update frontend image in task definition
+        id: update-frontend
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
           container-name: frontend
           image: ${{ steps.login-ecr.outputs.registry }}/tvmc-frontend:latest
+
+      - name: Update backend image in task definition
+        id: update-backend
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.update-frontend.outputs.task-definition }}
           container-name: backend
           image: ${{ steps.login-ecr.outputs.registry }}/tvmc-backend:latest
 
