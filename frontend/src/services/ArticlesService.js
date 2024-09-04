@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import jwt_decode from 'jwt-decode'
 import config from '../config.json'
 
@@ -10,7 +10,8 @@ export const useArticles = () => {
 
 export const ArticleProvider = ({ children }) => {
 
-    let { assetsUrl, apiUrl } = config
+    let apiUrl = process.env.REACT_APP_API_URL
+    let { assetsUrl } = config
 
     const retrieve = async ({
         title = null,

@@ -4,7 +4,7 @@ import config from '../config.json'
 
 const AuthContext = React.createContext()
 
-let { apiUrl } = config
+let apiUrl = process.env.REACT_APP_API_URL
 
 export const useAuth = () => {
     return useContext(AuthContext)
