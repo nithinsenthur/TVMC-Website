@@ -32,8 +32,9 @@ jobs:
           docker build -t ${{ steps.login-ecr.outputs.registry }}/tvmc-repo:tvmc-backend ./backend
           docker push ${{ steps.login-ecr.outputs.registry }}/tvmc-repo:tvmc-backend
 
-      - name: Retrieve and decode task definition from GitHub Secret
-        run: echo "${{ secrets.ECS_TASK_DEFINITION_B64 }}" | base64 --decode > task-definition.json
+      - name: Download task definition from S3
+        run: |
+          aws s3 cp s3://${{ secrets.S3_BUCKET_NAME }}/task-definition.json task-definition.json
 
       - name: Output task definition for debugging
         run: cat task-definition.json
