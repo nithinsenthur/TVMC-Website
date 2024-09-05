@@ -36,9 +36,6 @@ jobs:
         run: |
           aws s3 cp s3://${{ secrets.S3_BUCKET_NAME }}/task-definition.json task-definition.json
 
-      - name: Output task definition for debugging
-        run: cat task-definition.json
-
       - name: Update frontend image in task definition
         id: update-frontend
         uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -60,4 +57,4 @@ jobs:
         with:
           service: ${{ secrets.ECS_SERVICE_NAME }}
           cluster: ${{ secrets.ECS_CLUSTER_NAME }}
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          task-definition: ${{ steps.update-backend.outputs.task-definition }}
