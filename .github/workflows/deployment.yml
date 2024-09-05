@@ -35,6 +35,9 @@ jobs:
       - name: Retrieve task definition from GitHub Secret
         run: printf "%s" "${{ secrets.ECS_TASK_DEFINITION }}" > task-definition.json
 
+      - name: Output task definition for debugging
+        run: cat task-definition.json
+
       - name: Update frontend image in task definition
         id: update-frontend
         uses: aws-actions/amazon-ecs-render-task-definition@v1
