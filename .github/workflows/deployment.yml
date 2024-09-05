@@ -33,7 +33,7 @@ jobs:
           docker push ${{ steps.login-ecr.outputs.registry }}/tvmc-repo:tvmc-backend
 
       - name: Retrieve task definition from GitHub Secret
-        run: echo "${{ secrets.ECS_TASK_DEFINITION }}" > task-definition.json
+        run: printf "%s" "${{ secrets.ECS_TASK_DEFINITION }}" > task-definition.json
 
       - name: Update frontend image in task definition
         id: update-frontend
