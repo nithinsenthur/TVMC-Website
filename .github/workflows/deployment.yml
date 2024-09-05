@@ -1,0 +1,60 @@
+name: Deploy to AWS Fargate Cluster
+
+on:
+  push:
+    branches:
+      - aws
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push Docker images to Amazon ECR
+        run: |
+          docker build -t ${{ steps.login-ecr.outputs.registry }}/tvmc-repo:tvmc-frontend ./frontend
+          docker push ${{ steps.login-ecr.outputs.registry }}/tvmc-repo:tvmc-frontend
+          docker build -t ${{ steps.login-ecr.outputs.registry }}/tvmc-repo:tvmc-backend ./backend
+          docker push ${{ steps.login-ecr.outputs.registry }}/tvmc-repo:tvmc-backend
+
+      - name: Download task definition from S3
+        run: |
+          aws s3 cp s3://${{ secrets.S3_BUCKET_NAME }}/task-definition.json task-definition.json
+
+      - name: Update frontend image in task definition
+        id: update-frontend
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: frontend
+          image: ${{ steps.login-ecr.outputs.registry }}/tvmc-frontend:latest
+
+      - name: Update backend image in task definition
+        id: update-backend
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.update-frontend.outputs.task-definition }}
+          container-name: backend
+          image: ${{ steps.login-ecr.outputs.registry }}/tvmc-backend:latest
+
+      - name: Deploy to Amazon ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          service: ${{ secrets.ECS_SERVICE_NAME }}
+          cluster: ${{ secrets.ECS_CLUSTER_NAME }}
+          task-definition: ${{ steps.update-backend.outputs.task-definition }}

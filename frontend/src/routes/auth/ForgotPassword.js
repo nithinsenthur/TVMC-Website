@@ -8,7 +8,7 @@ import { faGlasses, faTimes } from '@fortawesome/free-solid-svg-icons'
 import '../../styles/auth.css'
 
 export default function ForgotPassword() {
-
+    
     const { forgotPassword } = useAuth()
     const email = useRef()
     const [error, setError] = useState()
